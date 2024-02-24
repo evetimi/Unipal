@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class LoginController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-    
+    public static LoginController Instance;
+
+    private void Awake() {
+        Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public async void Login(string username, string password) {
+        LoginObject loginObj = new(username, password);
+
+        var uri = await UnipalClient.DoPostRequestAsync("asd", loginObj);
+        Debug.Log(uri);
+    }
+}
+
+public class LoginObject {
+    public string username;
+    public string password;
+
+    public LoginObject(string username, string password) {
+        this.username = username;
+        this.password = password;
     }
 }
