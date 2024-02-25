@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Globalization;
+using System.Collections;
 
 // 14 rows * 7 cols = 98 objects
 //  0 0 0 1 2 3 4
@@ -24,25 +25,52 @@ using DG.Tweening;
 
 public class CalendarMonthUI : MonoBehaviour
 {
-	[TabGroup("Setup"), SerializeField] private Transform _middlePosition;
-
-    [TabGroup("Month"), SerializeField] private Transform _monthContainer;
+	
+	[TabGroup("Month"), SerializeField] private Transform _monthContainer;
+    [TabGroup("Month"), SerializeField] private Transform _monthMiddlePosition;
     [TabGroup("Month"), SerializeField] private TMP_Text[] _monthTexts; // should be 3 objects
 
-    [TabGroup("Day"), SerializeField] private GridLayoutGroup _gridLayout;
     [TabGroup("Day"), SerializeField] private Transform _dayContainer;
-    [TabGroup("Day"), SerializeField] private TMP_Text[] _dayTexts; // should be 98 objects
+    [TabGroup("Day"), SerializeField] private Transform _dayMiddlePosition;
+    [TabGroup("Day"), SerializeField] private DateObject[] _dateObjects; // should be 98 objects
+
+    [TabGroup("Marker"), SerializeField] private Transform _todayMarker;
 
 	[BoxGroup("Effect"), SerializeField] private float _moveTime = 0.2f;
+    [BoxGroup("Effect"), SerializeField] private Color _currentViewColor = Color.black;
+    [BoxGroup("Effect"), SerializeField] private Color _outOfViewColor = Color.gray;
 
-    [BoxGroup("Runtime"), SerializeField] private int _currentMonth;
-    [BoxGroup("Runtime"), SerializeField] private int _currentYear;
-    [BoxGroup("Runtime"), SerializeField] private int _currentMonthIndex;
-    [BoxGroup("Runtime"), SerializeField] private int _nextMonthIndex;
+    [BoxGroup("Runtime"), ReadOnly, ShowInInspector] private int _currentMonth;
+    [BoxGroup("Runtime"), ReadOnly, ShowInInspector] private int _currentYear;
+    [BoxGroup("Runtime"), ReadOnly, ShowInInspector] private int _currentMonthIndex;
+    [BoxGroup("Runtime"), ReadOnly, ShowInInspector] private int _nextMonthIndex;
+    [BoxGroup("Runtime"), ReadOnly, ShowInInspector] private int _currentMonth1stRowIndex;
+    [BoxGroup("Runtime"), ReadOnly, ShowInInspector] private int _nextMonth1stRowIndex;
 
-	private bool ValidateMonth(int month) { return month >= 1 && month <= 12; }
+    private DateTime today;
 
-	[Button]
+    private bool ValidateMonth(int month) { return month >= 1 && month <= 12; }
+
+    private void Start() {
+        today = DateTime.Now;
+        SetMonth(today.Month, today.Year);
+    }
+
+    private void SetMonthText(TMP_Text monthText, int month, int year) {
+        monthText.text = $"{DateTimeFormatInfo.CurrentInfo.GetMonthName(month)} {year}";
+    }
+
+    private bool TryPutMarker(Transform parent, int day, int month, int year) {
+        if (day == today.Day && month == today.Month && year == today.Year) {
+            _todayMarker.gameObject.SetActive(true);
+            _todayMarker.SetParent(parent, false);
+            _todayMarker.localPosition = Vector3.zero;
+            return true;
+        }
+
+        return false;
+    }
+
     public void SetMonth(int month, int year) {
         if (month <= 0 || month > 12) {
             return;
@@ -52,95 +80,221 @@ public class CalendarMonthUI : MonoBehaviour
 		_currentYear = year;
 
         int index = 0;
-        DateTime providedDate = new DateTime(year, month, 1);
-        int dayOfWeek = (int)providedDate.DayOfWeek; // starts at 0 from Sunday
         int numberOfDays = DateTime.DaysInMonth(year, month);
 
-	    // Set all the day (previous months)
-        int previousNumberOfDays = ValidateMonth(month - 1) ? DateTime.DaysInMonth(year, month - 1) : DateTime.DaysInMonth(year - 1, 12);
-	    int previousDayOfWeek = (int)providedDate.DayOfWeek; // starts at 0 from Sunday
-	    if (previousDayOfWeek > 0) 
-	    {
-	    	int dayNumbs = ValidateMonth(month - 2) ? DateTime.DaysInMonth(year, month - 2) : DateTime.DaysInMonth(year - 1, 11);
-	    	for (int i = previousDayOfWeek - 1; i >= 0; i--, dayNumbs--) 
-	    	{
-	    		_dayTexts[i].text = dayNumbs.ToString();
-	    	}
+		// Set all the month
+		if (ValidateMonth(month - 1))
+            SetMonthText(_monthTexts[0], month - 1, year);
+        else
+            SetMonthText(_monthTexts[0], 12, year - 1);
+        
+        SetMonthText(_monthTexts[1], month, year);
+
+        if (ValidateMonth(month + 1))
+            SetMonthText(_monthTexts[2], month + 1, year);
+        else
+            SetMonthText(_monthTexts[2], 1, year + 1);
+
+        _monthContainer.transform.position = _monthMiddlePosition.position;
+
+        // Set all the day (previous months)
+        int previousNumberOfDays;
+        int previousMonth;
+        int previousYear;
+		DateTime previousDate;
+
+		if (ValidateMonth(month - 1)) {
+            previousMonth = month - 1;
+            previousYear = year;
+        } else {
+            previousMonth = 12;
+            previousYear = year - 1;
+        }
+
+        previousDate = new DateTime(previousYear, previousMonth, 1);
+        previousNumberOfDays = DateTime.DaysInMonth(previousYear, previousMonth);
+
+        int previousDayOfWeek = (int)previousDate.DayOfWeek; // starts at 0 from Sunday
+
+	    if (previousDayOfWeek > 0)  {
+            int m = ValidateMonth(month - 2) ? month - 2 : 11;
+            int y = ValidateMonth(month - 2) ? year : year - 1;
+            int dayNumbs = DateTime.DaysInMonth(y, m);
+	    	for (int i = previousDayOfWeek - 1; i >= 0; i--, dayNumbs--)  {
+                _dateObjects[i].SetDate(dayNumbs, m, y);
+	    		//_dateObjects[i].text = dayNumbs.ToString();
+       //         TryPutMarker(_dateObjects[i].transform, dayNumbs, m, y);
+            }
 	    	
 	    	index = previousDayOfWeek;
 	    }
 	    
-	    for (; index < previousDayOfWeek + previousNumberOfDays; index++)
-	    {
-	    	_dayTexts[index].text = (index - previousDayOfWeek + 1).ToString();
-	    }
+	    for (; index < previousDayOfWeek + previousNumberOfDays; index++) {
+            int dayNumbs = index - previousDayOfWeek + 1;
+            _dateObjects[index].SetDate(dayNumbs, previousMonth, previousYear);
+            //_dateObjects[index].text = dayNumbs.ToString();
+            //      TryPutMarker(_dateObjects[index].transform, dayNumbs, previousMonth, previousYear);
+        }
 
 	    // current month
 	    _currentMonthIndex = index;
-	    for (; index < _currentMonthIndex + numberOfDays; index++)
-	    {
-	    	_dayTexts[index].text = (index - _currentMonthIndex + 1).ToString();
-	    }
+	    for (; index < _currentMonthIndex + numberOfDays; index++) {
+            int dayNumbs = index - _currentMonthIndex + 1;
+            _dateObjects[index].SetDate(dayNumbs, month, year);
+            //_dateObjects[index].text = dayNumbs.ToString();
+            //TryPutMarker(_dateObjects[index].transform, dayNumbs, month, year);
+        }
 
 	    // next month
 	    _nextMonthIndex = index;
-        int nextNumberOfDays = ValidateMonth(month + 1) ? DateTime.DaysInMonth(year, month + 1) : DateTime.DaysInMonth(year + 1, 1);
-	    for (; index < _nextMonthIndex + nextNumberOfDays; index++)
-	    {
-	    	_dayTexts[index].text = (index - _nextMonthIndex + 1).ToString();
-	    }
+        int nM, nnM, nY, nnY; // nextMonth, nextYear, nextNextMonth, nextNextYear
+        if (ValidateMonth(month + 1)) {
+            nM = month + 1;
+            nY = year;
+        } else {
+            nM = 1;
+            nY = year + 1;
+        }
+
+        if (ValidateMonth(month + 2)) {
+            nnM = month + 2;
+            nnY = year;
+        } else {
+            nnM = 2;
+            nnY = year + 1;
+        }
+
+        int nextNumberOfDays = DateTime.DaysInMonth(nY, nM);
+	    for (; index < _nextMonthIndex + nextNumberOfDays; index++) {
+            int dayNumbs = index - _nextMonthIndex + 1;
+            _dateObjects[index].SetDate(dayNumbs, nM, nY);
+            //_dateObjects[index].text = dayNumbs.ToString();
+            //TryPutMarker(_dateObjects[index].transform, dayNumbs, nM, nY);
+        }
 	    
 	    int lastIndex = index;
-	    for (; index < _dayTexts.Length; index++)
-	    {
-	    	_dayTexts[index].text = (index - lastIndex + 1).ToString();
-	    }
+	    for (; index < _dateObjects.Length; index++) {
+            int dayNumbs = index - lastIndex + 1;
+            _dateObjects[index].SetDate(dayNumbs, nnM, nnY);
+            //_dateObjects[index].text = dayNumbs.ToString();
+            //TryPutMarker(_dateObjects[index].transform, dayNumbs, nnM, nnY);
+        }
+
+        // Make _nextMonthIndex to be on the 1st col
+        _nextMonth1stRowIndex = _currentMonthIndex + numberOfDays;
+        _nextMonth1stRowIndex -= _nextMonth1stRowIndex % 7;
 
         // Make _currentMonthIndex to be on the 1st col
-        _currentMonthIndex -= _currentMonthIndex % 7;
-        
-		// Make _nextMonthIndex to be on the 1st col
-        _nextMonthIndex = _currentMonthIndex + 42; // 6 rows * 7 cols
+        _currentMonth1stRowIndex = _currentMonthIndex - _currentMonthIndex % 7;
 
         // Set container position
-        Vector3 currentPosition = _dayTexts[_currentMonthIndex].transform.position;
-		Vector3 moveRange = _middlePosition.position - currentPosition;
-		_dayContainer.transform.position += moveRange;
+        //StartCoroutine(DelaySetDatePosition());
+        Vector3 currentPosition = _dateObjects[_currentMonth1stRowIndex].transform.position;
+        Vector3 moveRange = _dayMiddlePosition.position - currentPosition;
+        _dayContainer.transform.position += moveRange;
 
-		//// Disable all non-visible dates
+        // Set today marker
+        bool foundMarker = false;
+        foreach (var date in _dateObjects) {
+            if (TryPutMarker(date.transform, date.Date, date.Month, date.Year)) {
+                foundMarker = true;
+                break;
+            }
+        }
 
-		//for (int i = 0; i < _currentMonthIndex; i++) {
-		//	_dayTexts[i].gameObject.SetActive(false);
-		//}
-
-
-		//for (int i = _nextMonthIndex; i < _dayTexts.Length; i++) {
-		//	_dayTexts[i].gameObject.SetActive(false);
-		//}
+        if (!foundMarker) {
+            _todayMarker.gameObject.SetActive(false);
+        }
 	}
 
+    private IEnumerator DelaySetDatePosition() {
+        yield return null;
+
+        Vector3 currentPosition = _dateObjects[_currentMonth1stRowIndex].transform.position;
+        Vector3 moveRange = _dayMiddlePosition.position - currentPosition;
+        _dayContainer.transform.position += moveRange;
+    }
+
 	public void PreviousMonth() {
-        Vector3 previousPosition = _dayContainer.parent.InverseTransformPoint(_dayTexts[0].transform.position);
-        Vector3 moveRange = _middlePosition.localPosition - previousPosition;
-		Vector3 moveTarget = _dayContainer.transform.localPosition + moveRange;
-		//      for (int i = 0; i < _currentMonthIndex; i++) {
-		//	_dayTexts[i].gameObject.SetActive(true);
-		//}
+        animationValidation = 2;
 
-		Debug.Log(previousPosition);
-        Debug.Log(moveRange);
-        Debug.Log(moveTarget);
+		{
+            Vector3 previousLocalPosition = _dayContainer.parent.InverseTransformPoint(_dateObjects[0].transform.position);
+            Vector3 moveRange = _dayMiddlePosition.localPosition - previousLocalPosition;
+            Vector3 moveTarget = _dayContainer.transform.localPosition + moveRange;
 
-        _dayContainer.DOLocalMove(moveTarget, _moveTime).SetEase(Ease.InOutSine).OnComplete(() => {
-			if (ValidateMonth(_currentMonth - 1)) {
-				SetMonth(_currentMonth - 1, _currentYear);
-			} else {
-                SetMonth(12, _currentYear - 1);
-			}
-        });
+            _dayContainer.DOLocalMove(moveTarget, _moveTime).SetEase(Ease.InOutSine).OnComplete(() => AnimationComplete(true));
+        }
+
+        {
+            Vector3 previousLocalPosition = _monthContainer.parent.InverseTransformPoint(_monthTexts[0].transform.position);
+            Vector3 moveRange = _monthMiddlePosition.localPosition - previousLocalPosition;
+            Vector3 moveTarget = _monthContainer.transform.localPosition + moveRange;
+
+            _monthContainer.DOLocalMove(moveTarget, _moveTime).SetEase(Ease.InOutSine).OnComplete(() => AnimationComplete(true));
+        }
     }
 
     public void NextMonth() {
-        _gridLayout.enabled = false;
+        animationValidation = 2;
+
+        {
+            Vector3 nextLocalPosition = _dayContainer.parent.InverseTransformPoint(_dateObjects[_nextMonth1stRowIndex].transform.position);
+            Vector3 moveRange = _dayMiddlePosition.localPosition - nextLocalPosition;
+            Vector3 moveTarget = _dayContainer.transform.localPosition + moveRange;
+
+            _dayContainer.DOLocalMove(moveTarget, _moveTime).SetEase(Ease.InOutSine).OnComplete(() => AnimationComplete(false));
+        }
+
+        {
+            Vector3 nextLocalPosition = _monthContainer.parent.InverseTransformPoint(_monthTexts[2].transform.position);
+            Vector3 moveRange = _monthMiddlePosition.localPosition - nextLocalPosition;
+            Vector3 moveTarget = _monthContainer.transform.localPosition + moveRange;
+
+            _monthContainer.DOLocalMove(moveTarget, _moveTime).SetEase(Ease.InOutSine).OnComplete(() => AnimationComplete(false));
+        }
+    }
+
+    private int animationValidation;
+    private void AnimationComplete(bool movePreviousMonth) {
+        animationValidation--;
+
+        if (animationValidation <= 0) {
+            if (movePreviousMonth) {
+                if (ValidateMonth(_currentMonth - 1)) {
+                    SetMonth(_currentMonth - 1, _currentYear);
+                } else {
+                    SetMonth(12, _currentYear - 1);
+                }
+
+                for (int i = _nextMonthIndex; i < _dateObjects.Length; i++) {
+                    _dateObjects[i].Text.color = _currentViewColor;
+                    _dateObjects[i].Text.DOColor(_outOfViewColor, _moveTime).SetEase(Ease.Linear);
+                }
+
+                for (int i = _currentMonthIndex; i < _nextMonthIndex; i++) {
+                    _dateObjects[i].Text.color = _outOfViewColor;
+                    _dateObjects[i].Text.DOColor(_currentViewColor, _moveTime).SetEase(Ease.Linear);
+                }
+
+            } else {
+                if (ValidateMonth(_currentMonth + 1)) {
+                    SetMonth(_currentMonth + 1, _currentYear);
+                } else {
+                    SetMonth(1, _currentYear + 1);
+                }
+
+                for (int i = 0; i < _currentMonthIndex; i++) {
+                    _dateObjects[i].Text.color = _currentViewColor;
+                    _dateObjects[i].Text.DOColor(_outOfViewColor, _moveTime).SetEase(Ease.Linear);
+                }
+
+                for (int i = _currentMonthIndex; i < _nextMonthIndex; i++) {
+                    _dateObjects[i].Text.color = _outOfViewColor;
+                    _dateObjects[i].Text.DOColor(_currentViewColor, _moveTime).SetEase(Ease.Linear);
+                }
+
+            }
+        }
     }
 }
