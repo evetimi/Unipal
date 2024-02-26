@@ -1,6 +1,7 @@
 public enum MainMenuPanelID
 {
     MainMenu,
-    SignIn,
-    LogIn
+    SignUp,
+    LogIn,
+    VerifyScreen
 }

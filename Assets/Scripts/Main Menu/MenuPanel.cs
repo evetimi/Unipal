@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class MenuPanel : OnOffUIBehaviour
 {
-    [BoxGroup("On Change Effect"), SerializeField] private Transform _backgroundCirclePosition;
-    [BoxGroup("On Change Effect"), SerializeField] private Vector2[] _localBackgroundCirclePositions;
-    [BoxGroup("On Change Effect"), SerializeField] private Vector2[] _localBackgroundCircleScales;
+    [BoxGroup("On Change Effect"), SerializeField] protected Color _backgroundColor = Color.white;
+    [BoxGroup("On Change Effect"), SerializeField] protected Transform _backgroundCirclePosition;
+    [BoxGroup("On Change Effect"), SerializeField] protected Vector2[] _localBackgroundCirclePositions;
+    [BoxGroup("On Change Effect"), SerializeField] protected Vector2[] _localBackgroundCircleScales;
 
     public override void SetEnabled(bool enabled) {
         base.SetEnabled(enabled);
+
+        MainMenuController.Instance.ChangeBackgroundColor(_backgroundColor);
 
         if (_backgroundCirclePosition != null) {
             MainMenuController.Instance.MoveBackgroundCircle(_backgroundCirclePosition.position);

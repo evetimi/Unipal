@@ -8,13 +8,13 @@ public class OnOffUIBehaviour : UIBehaviour
 {
     private bool IsBoolTransition => transitionType == TransitionType.Bool;
 
-    [FoldoutGroup("On Off UI"), SerializeField] private Animator _onOffAnim;
-    [FoldoutGroup("On Off UI"), SerializeField] private TransitionType transitionType;
-    [FoldoutGroup("On Off UI"), SerializeField, ShowIf(nameof(IsBoolTransition))] private string _boolName = "enabled";
-    [FoldoutGroup("On Off UI"), SerializeField, HideIf(nameof(IsBoolTransition))] private string _onName = "enable";
-    [FoldoutGroup("On Off UI"), SerializeField, HideIf(nameof(IsBoolTransition))] private string _offName = "disable";
+    [FoldoutGroup("On Off UI"), SerializeField] protected Animator _onOffAnim;
+    [FoldoutGroup("On Off UI"), SerializeField] protected TransitionType transitionType;
+    [FoldoutGroup("On Off UI"), SerializeField, ShowIf(nameof(IsBoolTransition))] protected string _boolName = "enabled";
+    [FoldoutGroup("On Off UI"), SerializeField, HideIf(nameof(IsBoolTransition))] protected string _onName = "enable";
+    [FoldoutGroup("On Off UI"), SerializeField, HideIf(nameof(IsBoolTransition))] protected string _offName = "disable";
 
-    private enum TransitionType {
+    protected enum TransitionType {
         Bool,
         Trigger
     }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviourSingleton<MainMenuController>
 {
     [TabGroup("Setup"), SerializeField] private float _transitionWaitTime = 2f;
+    [TabGroup("Setup"), SerializeField] private Image _backgroundImage;
     [TabGroup("Setup"), SerializeField] private List<Panel> _panels;
 
     [TabGroup("Background Circle"), SerializeField] private Transform _backgroundCircle;
@@ -23,7 +25,7 @@ public class MainMenuController : MonoBehaviourSingleton<MainMenuController>
     private Panel _currentActive;
     
     private void Start() {
-        ChangePanel(MainMenuPanelID.SignIn);
+        ChangePanel(MainMenuPanelID.VerifyScreen);
     }
 
     public void ChangePanel(MainMenuPanelID panelId) {
@@ -52,6 +54,10 @@ public class MainMenuController : MonoBehaviourSingleton<MainMenuController>
 
         _currentActive = target;
         target.panel.SetEnabled(true);
+    }
+
+    public void ChangeBackgroundColor(Color color) {
+        _backgroundImage.DOColor(color, _backgroundCircleTransitionTime).SetEase(Ease.InOutSine);
     }
 
     public void MoveBackgroundCircle(Vector2 position) {
