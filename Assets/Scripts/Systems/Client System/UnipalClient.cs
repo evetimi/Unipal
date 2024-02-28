@@ -12,7 +12,7 @@ public class UnipalClient {
     public static bool ValidateHttpClient() {
         if (client == null) {
             client = new HttpClient();
-            client.BaseAddress = new Uri("http://13.48.195.77/");
+            client.BaseAddress = new Uri("http://16.171.193.220/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json")

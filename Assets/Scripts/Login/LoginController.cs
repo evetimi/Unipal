@@ -6,9 +6,9 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
 {
     [SerializeField] private string loginAPI = "login.php";
 
-    public async void Login(string username, string password) {
+    public async void Login(string email, string password) {
         LoginObject loginObj = new() {
-            username = username,
+            email = email,
             password = password
         };
 
@@ -17,11 +17,11 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
 
         LoginObject obj = JsonUtility.FromJson<LoginObject>(uri);
 
-        Debug.Log($"After Json: username = {username}, password = {password}");
+        Debug.Log($"After Json: email = {email}, password = {password}");
     }
 }
 
 public struct LoginObject {
-    public string username;
+    public string email;
     public string password;
 }
