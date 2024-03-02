@@ -6,11 +6,14 @@ using UnityEngine;
 public class SignInPanel : MenuPanel
 {
     [SerializeField] private TMP_InputField _emailInput;
+    [SerializeField] private TMP_InputField _passwordInput;
+    [SerializeField] private TMP_InputField _passwordConfirmInput;
     private bool _verified;
 
     public void VerifyEmail() {
-        // Do anim if verify success
+        LoginController.Instance.VerifyEmail(_emailInput.text);
 
+        // Do anim if verify success
         _verified = true;
         _emailInput.interactable = false;
         _onOffAnim.SetBool("signin", true);
