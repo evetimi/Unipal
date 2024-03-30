@@ -10,13 +10,16 @@ public class SignInPanel : MenuPanel
     [SerializeField] private TMP_InputField _passwordConfirmInput;
     private bool _verified;
 
-    public void VerifyEmail() {
-        LoginController.Instance.VerifyEmail(_emailInput.text);
+    public async void VerifyEmail() {
+        bool verify = await LoginController.Instance.VerifyEmail(_emailInput.text);
 
         // Do anim if verify success
-        _verified = true;
-        _emailInput.interactable = false;
-        _onOffAnim.SetBool("signin", true);
+
+        if (verify) {
+            _verified = true;
+            _emailInput.interactable = false;
+            _onOffAnim.SetBool("signin", true);
+        }
     }
 
     public void BackToEmail() {
