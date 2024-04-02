@@ -4,6 +4,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 public class MainMenuController : MonoBehaviourSingleton<MainMenuController>
 {
@@ -18,31 +19,41 @@ public class MainMenuController : MonoBehaviourSingleton<MainMenuController>
 
     [System.Serializable]
     private class Panel {
-        public MainMenuPanelID panelId;
-        public MenuPanel panel;
+        [HorizontalGroup, HideLabel, ReadOnly] public MainMenuPanelID panelId;
+        [HorizontalGroup, HideLabel] public MenuPanel panel;
     }
 
     private Panel _currentActive;
-    
+
+    private void OnValidate() {
+        MainMenuPanelID[] mainMenuPanelIDs = EnumUtility.GetEnumArray<MainMenuPanelID>();
+        for (int i = 0; i < mainMenuPanelIDs.Length; i++) {
+            if (i >= _panels.Count) {
+                Panel panel = new() {
+                    panelId = mainMenuPanelIDs[i]
+                };
+                _panels.Add(panel);
+            } else {
+                _panels[i].panelId = mainMenuPanelIDs[i];
+            }
+        }
+
+        while (_panels.Count > mainMenuPanelIDs.Length) {
+            _panels.RemoveAt(_panels.Count - 1);
+        }
+    }
+
     private void Start() {
         ChangePanel(MainMenuPanelID.VerifyScreen);
     }
 
     public void ChangePanel(MainMenuPanelID panelId) {
-        Debug.Log("Reached");
-        Panel chosen = null;
-        foreach (var panel in _panels) {
-            if (panel.panelId == panelId) {
-                chosen = panel;
-                break;
-            }
-        }
-
-        if (chosen == null) {
+        int index = (int)panelId;
+        if (index < 0 || index >= _panels.Count) {
             return;
         }
 
-        StartCoroutine(ChangePanel(chosen));
+        StartCoroutine(ChangePanel(_panels[index]));
     }
 
     private IEnumerator ChangePanel(Panel target) {

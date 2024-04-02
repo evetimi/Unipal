@@ -27,4 +27,10 @@ public class MenuChangePanelSupporter : MonoBehaviour
             MainMenuController.Instance.ChangePanel(MainMenuPanelID.MainMenu);
         }
     }
+
+    public void ChangeModuleList() {
+        if (MainMenuController.Instance != null) {
+            MainMenuController.Instance.ChangePanel(MainMenuPanelID.ModuleList);
+        }
+    }
 }
