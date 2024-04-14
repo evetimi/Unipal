@@ -9,4 +9,15 @@ namespace Unipal.User {
 
         public Student(string id, string name) : base(id, name) { }
     }
+
+    class StudentModule {
+        private Module module;
+        private Dictionary<MarkType, int> marks;
+    }
+
+    enum MarkType {
+        Workshop = 0,
+        Exam = 1,
+        Assignment = 2
+    }
 }

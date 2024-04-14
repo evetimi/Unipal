@@ -25,6 +25,8 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
         var uri = await UnipalClient.DoPostRequestAsync(emailVerificationAPI, emailVerifyObject);
         Debug.Log(uri);
 
+        // TODO: Check if the email is good to go: it has to be in the system but not registered yet
+
         return true;
     }
 
@@ -81,3 +83,10 @@ public struct Status {
     public string status;
     public string body;
 }
+
+
+/*
+{
+    "email": "7as8d9as"
+}
+*/
