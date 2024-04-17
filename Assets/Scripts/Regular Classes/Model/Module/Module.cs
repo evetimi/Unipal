@@ -13,5 +13,13 @@ namespace Unipal.Modules {
             this.name = name;
             this.description = description;
         }
+
+        public override bool Equals(object obj) {
+            if (this == obj) return true;
+            if (obj is not Module module) return false;
+            if (id.Equals(module.id)) return true;
+
+            return false;
+        }
     }
 }
