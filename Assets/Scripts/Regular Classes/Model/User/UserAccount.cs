@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Unipal.User {
+namespace Unipal.Model.User {
     public abstract class UserAccount {
         private string id;
         private string name;

@@ -2,22 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Unipal.Modules {
+namespace Unipal.Model.Modules {
     public class Module {
-        private string id;
-        private string name;
-        private string description;
+        private string _id;
+        private string _name;
+        private string _description;
+
+        public string Id => _id;
+        public string Name => _name;
+        public string Description => _description;
 
         public Module(string id, string name, string description) {
-            this.id = id;
-            this.name = name;
-            this.description = description;
+            _id = id;
+            _name = name;
+            _description = description;
         }
 
         public override bool Equals(object obj) {
             if (this == obj) return true;
             if (obj is not Module module) return false;
-            if (id.Equals(module.id)) return true;
+            if (_id.Equals(module._id)) return true;
 
             return false;
         }

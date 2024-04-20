@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unipal.Modules;
+using Unipal.Model.Modules;
 using UnityEngine;
 
-namespace Unipal.User {
+namespace Unipal.Model.User {
     public class StudentModule {
         private Module _module;
         private MarkList _markList;

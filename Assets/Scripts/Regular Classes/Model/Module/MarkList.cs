@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Unipal.Modules {
+namespace Unipal.Model.Modules {
     public class MarkList : MonoBehaviour {
         private Dictionary<MarkType, int> _marks;
         public event EventHandler<MarkChangedEventArgs> MarkChanged;
