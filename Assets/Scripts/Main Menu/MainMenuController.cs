@@ -10,7 +10,7 @@ public class MainMenuController : MonoBehaviourSingleton<MainMenuController>
 {
     [TabGroup("Setup"), SerializeField] private float _transitionWaitTime = 2f;
     [TabGroup("Setup"), SerializeField] private Image _backgroundImage;
-    [TabGroup("Setup"), SerializeField] private List<Panel> _panels;
+    [TabGroup("Setup"), SerializeField, ListDrawerSettings(DraggableItems = false)] private List<Panel> _panels;
 
     [TabGroup("Background Circle"), SerializeField] private Transform _backgroundCircle;
     [TabGroup("Background Circle"), SerializeField] private float _backgroundCircleTransitionTime = 1f;

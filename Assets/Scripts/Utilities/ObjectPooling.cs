@@ -44,8 +44,8 @@ namespace Utilities {
         /// <typeparam name="T">Component type that can attached to GameObject</typeparam>
         /// <param name="amount">Amount of the child</param>
         /// <param name="newPrefab">Instantiate new prefab if the current child amount cannot satisfied the provided amount</param>
-        /// <param name="onObjectEnabled">Callback when the object is enabled or instantiated with reference to that object</param>
-        public void NewObjects<T>(int amount, T newPrefab, Action<T> onObjectEnabled) where T : Component {
+        /// <param name="onObjectEnabled">Callback when the object is enabled or instantiated with reference to that object and its respective index in the total created amount</param>
+        public void NewObjects<T>(int amount, T newPrefab, Action<int, T> onObjectEnabled) where T : Component {
             int newObjectIndex = 0;
             int currentChildIndex = 0;
             while (newObjectIndex < amount) {
@@ -54,7 +54,7 @@ namespace Utilities {
                     Transform child = transform.GetChild(currentChildIndex);
                     if (child.gameObject.activeSelf && child.TryGetComponent<T>(out var component)) {
                         child.gameObject.SetActive(true);
-                        onObjectEnabled?.Invoke(component);
+                        onObjectEnabled?.Invoke(newObjectIndex, component);
                         newObjectIndex++;
                     }
                 } else {
@@ -66,7 +66,7 @@ namespace Utilities {
 
                     T newObject = Instantiate(newPrefab, transform);
                     newObject.gameObject.SetActive(true);
-                    onObjectEnabled?.Invoke(newObject);
+                    onObjectEnabled?.Invoke(newObjectIndex, newObject);
                     newObjectIndex++;
                 }
 

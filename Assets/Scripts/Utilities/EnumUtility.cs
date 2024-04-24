@@ -5,12 +5,22 @@ using UnityEngine;
 
 namespace Utilities {
     public static class EnumUtility {
-        public static T[] GetEnumArray<T>() where T : Enum {
-            //if (cardColorsArray == null) {
-            //    cardColorsArray = (CardColor[])Enum.GetValues(typeof(CardColor));
-            //}
+        public static Dictionary<Type, Array> DictionaryOfEnums;
 
-            return (T[])Enum.GetValues(typeof(T));
+        public static T[] GetEnumArray<T>() where T : Enum {
+            DictionaryOfEnums ??= new();
+
+            if (DictionaryOfEnums.TryGetValue(typeof(T), out Array value)) {
+                if (value is T[] v) {
+                    return v;
+                } else {
+                    DictionaryOfEnums.Remove(typeof(T));
+                }
+            }
+
+            Array newValue = Enum.GetValues(typeof(T));
+            DictionaryOfEnums.Add(typeof(T), newValue);
+            return (T[])newValue;
         }
     }
 }
