@@ -6,9 +6,11 @@ using UnityEngine;
 public class SignInPanel : MenuPanel
 {
     [SerializeField] private TMP_InputField _emailInput;
+    [SerializeField] private TMP_InputField _tokenInput;
     [SerializeField] private TMP_InputField _passwordInput;
     [SerializeField] private TMP_InputField _passwordConfirmInput;
     private bool _verified;
+    private bool _tokenVerified;
 
     public async void VerifyEmail() {
         bool verify = await LoginController.Instance.VerifyEmail(_emailInput.text);
@@ -17,6 +19,18 @@ public class SignInPanel : MenuPanel
 
         if (verify) {
             _verified = true;
+            _emailInput.interactable = false;
+            _onOffAnim.SetBool("signin", true);
+        }
+    }
+
+    public async void VerifyToken() {
+        bool tokenVerify = await LoginController.Instance.VerifyToken(_emailInput.text, _tokenInput.text);
+
+        // Do anim if verify success
+
+        if (tokenVerify) {
+            _tokenVerified = true;
             _emailInput.interactable = false;
             _onOffAnim.SetBool("signin", true);
         }
@@ -31,8 +45,12 @@ public class SignInPanel : MenuPanel
     }
 
     public void ClickSignInButton() {
-        if (!_verified) {
-            VerifyEmail();
+        if (!_verified || !_tokenVerified) {
+            if (!_verified) {
+                VerifyEmail();
+            } else {
+                VerifyToken();
+            }
         } else {
             // TODO: Check verification
             BackToEmail();
