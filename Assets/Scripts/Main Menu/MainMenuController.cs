@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using UI.Menu.PanelIDs;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;

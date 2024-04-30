@@ -1,22 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unipal.Model.Assignments;
+using Unipal.Model.EventHandlers;
 using UnityEngine;
 
 namespace Unipal.Model.Modules {
     public class MarkList : MonoBehaviour {
-        private Dictionary<MarkType, int> _marks;
-        public event EventHandler<MarkChangedEventArgs> MarkChanged;
+        private Dictionary<Assignment, int> _marks;
+        public event EventHandler<MarkChangedEventArgs> OnMarkChanged;
 
         public MarkList() {
             _marks = new();
         }
 
-        public bool IsMarkExist(MarkType type) {
-            return _marks.ContainsKey(type);
+        public bool IsMarkExist(Assignment assignment) {
+            return _marks.ContainsKey(assignment);
         }
 
-        public void AddMark(MarkType markType, int mark) 
+        public void AddMark(Assignment assignment, int mark) 
         {
             if (mark < 0 || mark > 100)
             {
@@ -30,18 +32,18 @@ namespace Unipal.Model.Modules {
             //     { "score", mark }
             // });
 
-            _marks.Add(markType, mark);
+            _marks.Add(assignment, mark);
 
-            OnMarkChanged(markType, mark); 
+            MarkChanged(assignment, mark); 
         }
 
-        public void ChangeMark(MarkType markType, int newMark)
+        public void ChangeMark(Assignment assignment, int newMark)
         {
             // if (index < 0 || index >= _marks.Count)
             // {
             //     throw new ArgumentOutOfRangeException("index", "Index out of range");
             // }
-            if (!IsMarkExist(markType) || newMark < 0 || newMark > 100)
+            if (!IsMarkExist(assignment) || newMark < 0 || newMark > 100)
             {
                 // throw new ArgumentOutOfRangeException("newMark", "Mark must be between 0 and 100");
                 return;
@@ -50,13 +52,13 @@ namespace Unipal.Model.Modules {
             // var oldMark = (int)_marks[index]["score"];
             // _marks[index]["type"] = newMarkType;
             // _marks[index]["score"] = newMark;
-            var oldMark = _marks[markType];
-            _marks[markType] = newMark;
+            var oldMark = _marks[assignment];
+            _marks[assignment] = newMark;
 
-            OnMarkChanged(markType, newMark, oldMark);
+            MarkChanged(assignment, newMark, oldMark);
         }
 
-        public void RemoveMark(MarkType markType)
+        public void RemoveMark(Assignment assignment)
         {
             // if (index < 0 || index >= _marks.Count)
             // {
@@ -67,32 +69,19 @@ namespace Unipal.Model.Modules {
             // int removedMark = (int)_marks[index]["score"];
             // _marks.RemoveAt(index);
 
-            if (!IsMarkExist(markType)) {
+            if (!IsMarkExist(assignment)) {
                 return;
             }
             
-            int removedMark = _marks[markType];
-            _marks.Remove(markType);
+            int removedMark = _marks[assignment];
+            _marks.Remove(assignment);
 
-            OnMarkChanged(markType, removedMark, -1); 
+            MarkChanged(assignment, removedMark, -1); 
         }
 
-        private void OnMarkChanged(MarkType markType, int newMark, int oldMark = -1)
+        private void MarkChanged(Assignment assignment, int newMark, int oldMark = -1)
         {
-            MarkChanged?.Invoke(this, new MarkChangedEventArgs(markType, oldMark, newMark));
-        }
-    }
-
-    // Event argument class
-    public class MarkChangedEventArgs : EventArgs {
-        public MarkType MarkType { get; }
-        public int OldMark { get; }
-        public int NewMark { get; }
-
-        public MarkChangedEventArgs(MarkType markType, int oldMark, int newMark) {
-            MarkType = markType;
-            OldMark = oldMark;
-            NewMark = newMark;
+            OnMarkChanged?.Invoke(this, new MarkChangedEventArgs(assignment, oldMark, newMark));
         }
     }
 }

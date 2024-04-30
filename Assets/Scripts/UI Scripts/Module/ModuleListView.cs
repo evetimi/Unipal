@@ -56,7 +56,7 @@ namespace UI.Modules {
                 return;
             }
 
-            MainMenuController.Instance.ChangePanel(MainMenuPanelID.Module);
+            // MainMenuController.Instance.ChangePanel(MainMenuPanelID.Module);
 
             // Get access to ModuleView and instantiate the module informations
         }

@@ -9,6 +9,6 @@ public class SignInButton : MonoBehaviour
 
     public void Accept() {
         // TODO: Look for LoginController
-        _signInPanel.ClickSignInButton();
+        // _signInPanel.ClickSignInButton();
     }
 }

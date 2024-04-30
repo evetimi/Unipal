@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unipal.Model.Assignments;
 using Unipal.Model.Modules;
 using UnityEngine;
 
@@ -16,19 +17,19 @@ namespace Unipal.Model.User {
             _markList = new();
         }
 
-        public void AddMark(MarkType markType, int mark) 
+        public void AddMark(Assignment assignment, int mark) 
         {
-            _markList.AddMark(markType, mark);
+            _markList.AddMark(assignment, mark);
         }
 
-        public void ChangeMark(MarkType markType, int newMark)
+        public void ChangeMark(Assignment assignment, int newMark)
         {
-            _markList.ChangeMark(markType, newMark);
+            _markList.ChangeMark(assignment, newMark);
         }
 
-        public void RemoveMark(MarkType markType)
+        public void RemoveMark(Assignment assignment)
         {
-            _markList.RemoveMark(markType);
+            _markList.RemoveMark(assignment);
         }
     }
 }

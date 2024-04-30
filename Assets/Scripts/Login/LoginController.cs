@@ -9,6 +9,7 @@ using UnityEngine;
 public class LoginController : MonoBehaviourSingleton<LoginController>
 {
     [SerializeField] private string emailVerificationAPI = "emailVerification.php";
+    [SerializeField] private string tokenVerificationAPI = "token.php";
     [SerializeField] private string signupAPI = "signup.php";
     [SerializeField] private string loginAPI = "login.php";
 
@@ -23,6 +24,20 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
         };
 
         var uri = await UnipalClient.DoPostRequestAsync(emailVerificationAPI, emailVerifyObject);
+        Debug.Log(uri);
+
+        // TODO: Check if the email is good to go: it has to be in the system but not registered yet
+
+        return true;
+    }
+
+    public async Task<bool> VerifyToken(string email, string token) {
+        TokenObject tokenVerifyObject = new TokenObject() {
+            email = email,
+            token = token
+        };
+
+        var uri = await UnipalClient.DoPostRequestAsync(tokenVerificationAPI, tokenVerifyObject);
         Debug.Log(uri);
 
         // TODO: Check if the email is good to go: it has to be in the system but not registered yet
@@ -59,7 +74,7 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
             password = password
         };
 
-        MainMenuController.Instance.ChangePanel(MainMenuPanelID.MainMenu);
+        // MainMenuController.Instance.ChangePanel(MainMenuPanelID.MainMenu);
 
         var uri = await UnipalClient.DoPostRequestAsync(loginAPI, loginObj);
         Debug.Log(uri);
@@ -72,6 +87,11 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
 
 public struct EmailVerifyObject {
     public string email;
+}
+
+public struct TokenObject {
+    public string email;
+    public string token;
 }
 
 public struct LoginObject {
