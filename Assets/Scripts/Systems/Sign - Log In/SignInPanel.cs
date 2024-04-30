@@ -35,6 +35,11 @@ public class SignInPanel : MenuPanel
         return tokenVerify;
     }
 
+    public async Task<bool> SignUp() {
+        bool signUp = await LoginController.Instance.Signup(_emailInput.text, _passwordInput.text, _passwordConfirmInput.text);
+        return signUp;
+    }
+
     public void BackToEmail() {
         // Get back to Email
         _emailInput.interactable = true;

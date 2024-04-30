@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -51,8 +52,11 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
     /// <param name="email">Email to sign up</param>
     /// <param name="password">Password to sign up</param>
     /// <param name="confirmPassword">To confirm the password if it is matched password or not</param>
-    public async void Signup(string email, string password, string confirmPassword) {
+    public async Task<bool> Signup(string email, string password, string confirmPassword) {
         // TODO: confirmPassword
+        if (!password.Equals(confirmPassword)) {
+            return false;
+        }
         
         LoginObject loginObj = new() {
             email = email,
@@ -61,6 +65,8 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
 
         var uri = await UnipalClient.DoPostRequestAsync(signupAPI, loginObj);
         Debug.Log(uri);
+
+        return true;
     }
 
     /// <summary>
@@ -68,7 +74,7 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
     /// </summary>
     /// <param name="email">Email to login</param>
     /// <param name="password">Password to login</param>
-    public async void Login(string email, string password) {
+    public async Task<bool> Login(string email, string password) {
         LoginObject loginObj = new() {
             email = email,
             password = password
@@ -78,6 +84,8 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
 
         var uri = await UnipalClient.DoPostRequestAsync(loginAPI, loginObj);
         Debug.Log(uri);
+
+        return true;
 
         // Status obj = JsonUtility.FromJson<Status>(uri);
 

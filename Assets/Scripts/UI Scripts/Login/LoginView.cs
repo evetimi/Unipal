@@ -8,6 +8,7 @@ namespace UI.Logins {
     public class LoginView : MenuPanel {
         [SerializeField] private LoginMenuContainer _loginMenuContainer;
         [SerializeField] private SignInPanel _signInPanel;
+        [SerializeField] private LoginPanel _loginPanel;
 
         private bool _verified;
         private bool _tokenVerified;
@@ -28,7 +29,14 @@ namespace UI.Logins {
             _tokenVerified = await _signInPanel.VerifyToken();
         }
 
-        private void BackToEmail() {
+        private async void SignUp() {
+            bool signup = await _signInPanel.SignUp();
+            if (signup) {
+
+            }
+        }
+
+        public void BackToEmail() {
             // Get back to Email
 
             _verified = false;
@@ -36,16 +44,30 @@ namespace UI.Logins {
         }
 
         public void ClickSignInButton() {
-            if (!_verified || !_tokenVerified) {
-                if (!_verified) {
-                    VerifyEmail();
-                } else {
-                    VerifyToken();
-                }
+            if (!_verified) {
+                VerifyEmail();
             } else {
                 // TODO: Check verification
-                BackToEmail();
-                _loginMenuContainer.ChangePanel(LoginPanelID.Login);
+                SignUp();
+            }
+            // if (!_verified || !_tokenVerified) {
+            //     if (!_verified) {
+            //         VerifyEmail();
+            //     } else {
+            //         VerifyToken();
+            //     }
+            // } else {
+            //     // TODO: Check verification
+            //     BackToEmail();
+            //     _loginMenuContainer.ChangePanel(LoginPanelID.Login);
+            // }
+        }
+
+        public async void ClickLoginButton() {
+            bool login = await _loginPanel.Login();
+
+            if (login) {
+                // TODO: go to main menu
             }
         }
     }

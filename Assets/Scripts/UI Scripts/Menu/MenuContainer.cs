@@ -8,7 +8,7 @@ using Utilities;
 namespace UI.Menu {
     public abstract class MenuContainer<T> : MonoBehaviour where T : Enum {
         [FoldoutGroup("Menu Container"), SerializeField] private float _transitionWaitTime = 0.2f;
-        [FoldoutGroup("Menu Container"), SerializeField] private List<Panel> _panels;
+        [FoldoutGroup("Menu Container"), SerializeField, ListDrawerSettings(DraggableItems = false)] private List<Panel> _panels;
 
         [System.Serializable]
         private class Panel {

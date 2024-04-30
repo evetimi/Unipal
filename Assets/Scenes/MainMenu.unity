@@ -257,17 +257,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 13300770}
   m_CullTransparentMesh: 1
---- !u!114 &28619140 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2492257337314064576, guid: 10065614d445e9b4e829c9871d9914c7, type: 3}
-  m_PrefabInstance: {fileID: 8956959963360245168}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d74ea0c34fe367f43a2a1d95f334a608, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &38339145
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,8 +287,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emailVerificationAPI: emailVerification.php
-  signupAPI: signup.php
-  loginAPI: login.php
+  tokenVerificationAPI: token.php
+  signupAPI: userSignup.php
+  loginAPI: userLogin.php
 --- !u!4 &38339147
 Transform:
   m_ObjectHideFlags: 0
@@ -713,17 +703,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 204810730}
   m_CullTransparentMesh: 1
---- !u!114 &216438028 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8201730783782604352, guid: 10065614d445e9b4e829c9871d9914c7, type: 3}
-  m_PrefabInstance: {fileID: 8956959963360245168}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 799512ed17f82c844931969c10bac8fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &267216806
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,17 +874,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 270429458}
   m_CullTransparentMesh: 1
---- !u!114 &329640809 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8623529312693281746, guid: 93a7e763dae3f36459f134fdf1091f63, type: 3}
-  m_PrefabInstance: {fileID: 716937418}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &345974397
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,17 +946,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &454563729 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8623529312693281746, guid: 93a7e763dae3f36459f134fdf1091f63, type: 3}
-  m_PrefabInstance: {fileID: 588575008}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &463134529
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,14 +972,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463134529}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 884727571}
   - {fileID: 996723514}
-  m_Father: {fileID: 885623812}
+  m_Father: {fileID: 1694206560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1038,7 +995,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 463134529}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 799512ed17f82c844931969c10bac8fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b821f390e85a5644a751c5e3365d696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _onOffAnim: {fileID: 463134532}
@@ -1050,6 +1007,8 @@ MonoBehaviour:
   _backgroundCirclePosition: {fileID: 996723514}
   _localBackgroundCirclePositions: []
   _localBackgroundCircleScales: []
+  _emailInput: {fileID: 716937420}
+  _passwordInput: {fileID: 588575010}
 --- !u!95 &463134532
 Animator:
   serializedVersion: 5
@@ -1109,14 +1068,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 476435414}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 382368678}
   - {fileID: 924101799}
-  m_Father: {fileID: 885623812}
+  m_Father: {fileID: 1694206560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1145,6 +1104,7 @@ MonoBehaviour:
   _localBackgroundCirclePositions: []
   _localBackgroundCircleScales: []
   _emailInput: {fileID: 1179335712}
+  _tokenInput: {fileID: 0}
   _passwordInput: {fileID: 1579919485}
   _passwordConfirmInput: {fileID: 1804644121}
 --- !u!95 &476435417
@@ -1649,6 +1609,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8438091604695844793, guid: 93a7e763dae3f36459f134fdf1091f63, type: 3}
   m_PrefabInstance: {fileID: 588575008}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &588575010 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7242732496611182793, guid: 93a7e763dae3f36459f134fdf1091f63, type: 3}
+  m_PrefabInstance: {fileID: 588575008}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &593056754
 GameObject:
   m_ObjectHideFlags: 0
@@ -1731,9 +1702,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuChangePanelSupporter, Assembly-CSharp
-        m_MethodName: ChangeLogIn
+      - m_Target: {fileID: 1694206561}
+        m_TargetAssemblyTypeName: UI.Menu.LoginMenuContainer, Assembly-CSharp
+        m_MethodName: ChangeLogin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2216,6 +2187,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8438091604695844793, guid: 93a7e763dae3f36459f134fdf1091f63, type: 3}
   m_PrefabInstance: {fileID: 716937418}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &716937420 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7242732496611182793, guid: 93a7e763dae3f36459f134fdf1091f63, type: 3}
+  m_PrefabInstance: {fileID: 716937418}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &820243601
 GameObject:
   m_ObjectHideFlags: 0
@@ -2420,8 +2402,7 @@ RectTransform:
   - {fileID: 2135965274}
   - {fileID: 1371620938}
   - {fileID: 1426623323}
-  - {fileID: 476435415}
-  - {fileID: 463134530}
+  - {fileID: 1694206560}
   - {fileID: 1811836502}
   - {fileID: 1346223518}
   m_Father: {fileID: 0}
@@ -2542,7 +2523,6 @@ GameObject:
   - component: {fileID: 983861046}
   - component: {fileID: 983861045}
   - component: {fileID: 983861044}
-  - component: {fileID: 983861047}
   m_Layer: 5
   m_Name: Sign In Button
   m_TagString: Untagged
@@ -2614,9 +2594,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 983861047}
-        m_TargetAssemblyTypeName: LogInButton, Assembly-CSharp
-        m_MethodName: Accept
+      - m_Target: {fileID: 1694206562}
+        m_TargetAssemblyTypeName: UI.Logins.LoginView, Assembly-CSharp
+        m_MethodName: ClickSignInButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2664,19 +2644,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 983861042}
   m_CullTransparentMesh: 1
---- !u!114 &983861047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 983861042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e40f078127204b41bfeac052b9ebcce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _signInPanel: {fileID: 476435416}
 --- !u!1 &996723513
 GameObject:
   m_ObjectHideFlags: 0
@@ -2901,8 +2868,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuChangePanelSupporter, Assembly-CSharp
+      - m_Target: {fileID: 1668536725}
+        m_TargetAssemblyTypeName: UI.Menu.MainMenuContainer, Assembly-CSharp
         m_MethodName: ChangeLogIn
         m_Mode: 1
         m_Arguments:
@@ -3108,8 +3075,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuChangePanelSupporter, Assembly-CSharp
+      - m_Target: {fileID: 1694206561}
+        m_TargetAssemblyTypeName: UI.Menu.LoginMenuContainer, Assembly-CSharp
         m_MethodName: ChangeSignUp
         m_Mode: 1
         m_Arguments:
@@ -3884,7 +3851,6 @@ GameObject:
   - component: {fileID: 1481502118}
   - component: {fileID: 1481502117}
   - component: {fileID: 1481502116}
-  - component: {fileID: 1481502115}
   m_Layer: 5
   m_Name: Log In Button
   m_TagString: Untagged
@@ -3912,20 +3878,6 @@ RectTransform:
   m_AnchoredPosition: {x: 642, y: -150}
   m_SizeDelta: {x: 1084, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1481502115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1481502113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 482fbc06b4039c5468cf94b63e2f329f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _usernameText: {fileID: 329640809}
-  _passwordText: {fileID: 454563729}
 --- !u!114 &1481502116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3970,9 +3922,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1481502115}
-        m_TargetAssemblyTypeName: LogInButton, Assembly-CSharp
-        m_MethodName: Accept
+      - m_Target: {fileID: 1694206562}
+        m_TargetAssemblyTypeName: UI.Logins.LoginView, Assembly-CSharp
+        m_MethodName: ClickLoginButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4286,8 +4238,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 476435416}
-        m_TargetAssemblyTypeName: SignInPanel, Assembly-CSharp
+      - m_Target: {fileID: 1694206562}
+        m_TargetAssemblyTypeName: UI.Logins.LoginView, Assembly-CSharp
         m_MethodName: BackToEmail
         m_Mode: 1
         m_Arguments:
@@ -4328,21 +4280,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c97cb3f4ea89be449a578aed9dde6203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transitionWaitTime: 0.2
+  _mainMenuContainer: {fileID: 1668536725}
   _backgroundImage: {fileID: 2135965275}
-  _panels:
-  - panelId: 0
-    panel: {fileID: 1426623325}
-  - panelId: 1
-    panel: {fileID: 216438028}
-  - panelId: 2
-    panel: {fileID: 476435416}
-  - panelId: 3
-    panel: {fileID: 463134531}
-  - panelId: 4
-    panel: {fileID: 28619140}
-  - panelId: 5
-    panel: {fileID: 2089828120}
   _backgroundCircle: {fileID: 1371620938}
   _backgroundCircleTransitionTime: 1
   _defaultCircleLocalPositions:
@@ -4382,29 +4321,12 @@ MonoBehaviour:
   _panels:
   - panelId: 0
     panel: {fileID: 1426623325}
-    isPrefab: 0
-    parent: {fileID: 0}
   - panelId: 1
     panel: {fileID: 476435416}
-    isPrefab: 0
-    parent: {fileID: 0}
   - panelId: 2
-    panel: {fileID: 463134531}
-    isPrefab: 0
-    parent: {fileID: 0}
-  - panelId: 3
-    panel: {fileID: 0}
-    isPrefab: 0
-    parent: {fileID: 0}
-  - panelId: 4
-    panel: {fileID: 0}
-    isPrefab: 0
-    parent: {fileID: 0}
-  - panelId: 5
-    panel: {fileID: 0}
-    isPrefab: 0
-    parent: {fileID: 0}
-  _studentMenuPrefab: {fileID: 0}
+    panel: {fileID: 1694206562}
+  _parent: {fileID: 0}
+  _studentMenuPrefab: {fileID: -7170942069207594238, guid: 10065614d445e9b4e829c9871d9914c7, type: 3}
 --- !u!1 &1687091551
 GameObject:
   m_ObjectHideFlags: 0
@@ -4545,6 +4467,110 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694078309}
   m_CullTransparentMesh: 1
+--- !u!1 &1694206559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1694206560}
+  - component: {fileID: 1694206562}
+  - component: {fileID: 1694206561}
+  - component: {fileID: 1694206563}
+  m_Layer: 5
+  m_Name: Login UI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1694206560
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694206559}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 476435415}
+  - {fileID: 463134530}
+  - {fileID: 2031315573}
+  m_Father: {fileID: 885623812}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1694206561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694206559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75a528426ec1e544cb9708b827351c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transitionWaitTime: 0.2
+  _panels:
+  - panelId: 0
+    panel: {fileID: 476435416}
+  - panelId: 1
+    panel: {fileID: 463134531}
+--- !u!114 &1694206562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694206559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f0af771a43055246bc99dea6a32ea7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onOffAnim: {fileID: 1694206563}
+  transitionType: 0
+  _boolName: enabled
+  _onName: enable
+  _offName: disable
+  _backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  _backgroundCirclePosition: {fileID: 2031315573}
+  _localBackgroundCirclePositions: []
+  _localBackgroundCircleScales: []
+  _loginMenuContainer: {fileID: 1694206561}
+  _signInPanel: {fileID: 476435416}
+  _loginPanel: {fileID: 463134531}
+--- !u!95 &1694206563
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694206559}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e32bb2c074c94514b97333091a609ce0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1804644117
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4767,6 +4793,41 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2031315572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2031315573}
+  m_Layer: 5
+  m_Name: Circle Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2031315573
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031315572}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1694206560}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -926}
+  m_SizeDelta: {x: 1346.0449, y: 930.8745}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2045389050
 GameObject:
   m_ObjectHideFlags: 0
@@ -4842,17 +4903,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2045389050}
   m_CullTransparentMesh: 1
---- !u!114 &2089828120 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7857108131574020804, guid: 10065614d445e9b4e829c9871d9914c7, type: 3}
-  m_PrefabInstance: {fileID: 8956959963360245168}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1efa1449d0b8e0d43a59d30f8d8f0880, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2113564883
 GameObject:
   m_ObjectHideFlags: 0

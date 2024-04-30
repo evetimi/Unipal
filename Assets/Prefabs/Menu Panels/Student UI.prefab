@@ -4048,6 +4048,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8036347127225264471}
   - component: {fileID: -7170942069207594238}
+  - component: {fileID: 328810429460839985}
   m_Layer: 5
   m_Name: Student UI
   m_TagString: Untagged
@@ -4096,20 +4097,34 @@ MonoBehaviour:
   _panels:
   - panelId: 0
     panel: {fileID: 0}
-    isPrefab: 0
-    parent: {fileID: 0}
   - panelId: 1
     panel: {fileID: 0}
-    isPrefab: 0
-    parent: {fileID: 0}
   - panelId: 2
     panel: {fileID: 0}
-    isPrefab: 0
-    parent: {fileID: 0}
   - panelId: 3
     panel: {fileID: 0}
-    isPrefab: 0
-    parent: {fileID: 0}
+--- !u!114 &328810429460839985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558011161264653280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b9b34ea6b94c7429a55d26caac37c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onOffAnim: {fileID: 0}
+  transitionType: 0
+  _boolName: enabled
+  _onName: enable
+  _offName: disable
+  _backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  _backgroundCirclePosition: {fileID: 0}
+  _localBackgroundCirclePositions: []
+  _localBackgroundCircleScales: []
+  _studentMenuContainer: {fileID: 0}
 --- !u!1 &1570294757808250062
 GameObject:
   m_ObjectHideFlags: 0
