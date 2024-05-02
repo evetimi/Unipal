@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Unipal.Model.Modules;
 using UnityEngine;
+using UnityEngine.Events;
 using Utilities;
 
 namespace UI.Modules {
     public class ModuleListView : MenuPanel {
         [BoxGroup("Module List View"), SerializeField] private ObjectPooling _moduleContainerPool;
         [BoxGroup("Module List View"), SerializeField] private ModuleComponent _moduleComponentPrefab;
+        [BoxGroup("Module List View"), SerializeField] private ModuleView _moduleView;
+        [BoxGroup("Module List View"), SerializeField] private UnityEvent _onModuleClick;
 
         private List<ModuleComponent> _moduleComponentList;
 
@@ -56,9 +59,11 @@ namespace UI.Modules {
                 return;
             }
 
-            // MainMenuController.Instance.ChangePanel(MainMenuPanelID.Module);
-
             // Get access to ModuleView and instantiate the module informations
+            _moduleView.SetModule(module);
+
+            // Call this event so that the Unity event will handle this to change to module view
+            _onModuleClick?.Invoke();
         }
     }
 }

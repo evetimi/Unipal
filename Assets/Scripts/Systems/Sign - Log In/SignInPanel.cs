@@ -7,7 +7,6 @@ using UnityEngine;
 public class SignInPanel : MenuPanel
 {
     [SerializeField] private TMP_InputField _emailInput;
-    [SerializeField] private TMP_InputField _tokenInput;
     [SerializeField] private TMP_InputField _passwordInput;
     [SerializeField] private TMP_InputField _passwordConfirmInput;
 
@@ -22,8 +21,8 @@ public class SignInPanel : MenuPanel
         return verify;
     }
 
-    public async Task<bool> VerifyToken() {
-        bool tokenVerify = await LoginController.Instance.VerifyToken(_emailInput.text, _tokenInput.text);
+    public async Task<bool> VerifyToken(string token) {
+        bool tokenVerify = await LoginController.Instance.VerifyToken(_emailInput.text, token);
 
         // Do anim if verify success
 

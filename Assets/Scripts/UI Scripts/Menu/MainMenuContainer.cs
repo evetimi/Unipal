@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace UI.Menu {
     public class MainMenuContainer : MenuContainer<MainMenuPanelID> {
-        [SerializeField] private Transform _parent;
-        [SerializeField, RequiredIn(PrefabKind.PrefabAsset)] private StudentMenuContainer _studentMenuPrefab;
+        // [SerializeField] private Transform _parent;
+        // [SerializeField, RequiredIn(PrefabKind.PrefabAsset)] private StudentMenuContainer _studentMenuPrefab;
 
         private GameObject _currentMenu;
 
@@ -23,24 +23,38 @@ namespace UI.Menu {
             ChangePanel(MainMenuPanelID.LogIn);
         }
 
-        public void ChangeStudentMainMenu() {
-            if (_currentMenu == null || !_currentMenu.TryGetComponent<StudentMenuContainer>(out var studentMenuContainer)) {
-                if (_currentMenu) {
-                    Destroy(_currentMenu);
-                }
-                studentMenuContainer = Instantiate(_studentMenuPrefab, _parent);
-                _currentMenu = studentMenuContainer.gameObject;
+        public void ChangeStudentMenu() {
+            // if (_currentMenu == null || !_currentMenu.TryGetComponent<StudentMenuContainer>(out var studentMenuContainer)) {
+            //     if (_currentMenu) {
+            //         Destroy(_currentMenu);
+            //     }
+            //     studentMenuContainer = Instantiate(_studentMenuPrefab, _parent);
+            //     _currentMenu = studentMenuContainer.gameObject;
+            // }
+
+            // studentMenuContainer.ChangeMainMenu();
+
+            if (_currentMenu != null) {
+                Destroy(_currentMenu);
             }
 
-            studentMenuContainer.ChangeMainMenu();
+            _currentMenu = ChangePanel(MainMenuPanelID.StudentMenu).gameObject;
         }
 
-        public void ChangeTeacherMainMenu() {
-            // ChangePanel(MainMenuPanelID.TeacherMainMenu);
+        public void ChangeTeacherMenu() {
+            if (_currentMenu != null) {
+                Destroy(_currentMenu);
+            }
+
+            _currentMenu = ChangePanel(MainMenuPanelID.TeacherMenu).gameObject;
         }
 
-        public void ChangeAdminMainMenu() {
-            // ChangePanel(MainMenuPanelID.AdminMainMenu);
+        public void ChangeAdminMenu() {
+            if (_currentMenu != null) {
+                Destroy(_currentMenu);
+            }
+
+            _currentMenu = ChangePanel(MainMenuPanelID.AdminMenu).gameObject;
         }
     }
 }

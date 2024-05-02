@@ -13,10 +13,10 @@ namespace UI.Menu {
         [System.Serializable]
         private class Panel {
             [HorizontalGroup, HideLabel, ReadOnly] public T panelId;
-            [HorizontalGroup, HideLabel] public MenuPanel panel;
-            // [HorizontalGroup, LabelWidth(50f)] public bool isPrefab;
-            // [ShowIf(nameof(isPrefab)), InfoBox("panel will be treated as prefab, if the panel's parent is not this parent, it will be instantiated to the new one and re-assign new panel. If the panel's parent is this parent, simply transition to this panel without instantiating new one.")]
-            // public Transform parent;
+            [HorizontalGroup, HideLabel, DisableIf(nameof(isPrefab))] public MenuPanel panel;
+            [HorizontalGroup, LabelWidth(50f)] public bool isPrefab;
+            [ShowIf(nameof(isPrefab))] public MenuPanel panelPrefab;
+            [ShowIf(nameof(isPrefab))] public Transform parent;
         }
 
         private Panel _currentActive;
@@ -39,13 +39,29 @@ namespace UI.Menu {
             }
         }
 
-        public void ChangePanel(T panelId) {
+        private void Awake() {
+            foreach (var panel in _panels) {
+                if (panel.isPrefab) {
+                    panel.panel = null;
+                }
+            }
+        }
+
+        public MenuPanel ChangePanel(T panelId) {
             int index = Convert.ToInt32(panelId);
             if (index < 0 || index >= _panels.Count) {
-                return;
+                return null;
             }
 
-            StartCoroutine(ChangePanel(_panels[index]));
+            Panel target = _panels[index];
+
+            if (target.isPrefab && target.panel == null) {
+                target.panel = Instantiate(target.panelPrefab, target.parent);
+            }
+
+            StartCoroutine(ChangePanel(target));
+
+            return target.panel;
         }
 
         private IEnumerator ChangePanel(Panel target) {

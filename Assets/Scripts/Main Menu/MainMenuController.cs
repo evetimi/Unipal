@@ -18,6 +18,8 @@ public class MainMenuController : MonoBehaviourSingleton<MainMenuController>
     [TabGroup("Background Circle"), SerializeField] private Vector2[] _defaultCircleLocalPositions;
     [TabGroup("Background Circle"), SerializeField] private Vector2[] _defaultCircleLocalScales;
 
+    public MainMenuContainer MainMenuContainer => _mainMenuContainer;
+
     private void Start() {
         _mainMenuContainer.ChangePanel(MainMenuPanelID.VerifyScreen);
     }
