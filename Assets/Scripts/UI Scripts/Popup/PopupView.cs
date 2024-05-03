@@ -11,7 +11,7 @@ namespace UI.Popup {
         [SerializeField] private RectTransform _content;
 
         private bool _closeOnConfirm;
-        private PopupObject<object> _currentPopupObject;
+        private PopupObject _currentPopupObject;
         private Action<object> _onCancelCalback;
         private Action<object> _onConfirmCallback;
 
@@ -19,7 +19,7 @@ namespace UI.Popup {
             base.Open();
 
             PopupObject<T> createdObject = Instantiate(popupObject, _content);
-            _currentPopupObject = createdObject as PopupObject<object>;
+            _currentPopupObject = createdObject;
             _container.SetActive(true);
 
             if (onCancelCalback != null) {
@@ -51,12 +51,12 @@ namespace UI.Popup {
         }
 
         public void CancelButtonClick() {
-            _onCancelCalback?.Invoke(_currentPopupObject.GetData());
+            _onCancelCalback?.Invoke(_currentPopupObject.GetDataObject());
             Close();
         }
 
         public void ConfirmButtonClick() {
-            _onConfirmCallback?.Invoke(_currentPopupObject.GetData());
+            _onConfirmCallback?.Invoke(_currentPopupObject.GetDataObject());
             if (_closeOnConfirm) {
                 Close();
             }

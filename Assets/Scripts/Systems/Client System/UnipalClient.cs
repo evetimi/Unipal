@@ -11,6 +11,8 @@ using UnityEngine;
 /// </summary>
 public static class UnipalClient {
     public static HttpClient client;
+    public static Action<object> OnBeforeSendingRequest;
+    public static Action<string> OnAfterSendingRequest;
 
     /// <summary>
     /// To validate the connection to the server.
@@ -41,11 +43,15 @@ public static class UnipalClient {
             return null;
         }
 
+        OnBeforeSendingRequest?.Invoke(requestObj);
+
         HttpResponseMessage response = await client.PostAsJsonAsync(
             $"api/{apiUrl}", requestObj
         );
 
         var responseString = await response.Content.ReadAsStringAsync();
+
+        OnAfterSendingRequest?.Invoke(responseString);
         
         return responseString;
     }

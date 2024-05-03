@@ -25,16 +25,16 @@ namespace UI.Logins {
         }
 
         private async void VerifyEmail() {
-            // _verified = await _signInPanel.VerifyEmail();
-            _verified = true;
+            _verified = await _signInPanel.VerifyEmail();
+            
             if (_verified) {
                 _createdTokenPopup = PopupView.Instance.Open(_tokenPopupPrefab, null, VerifyToken) as TokenPopup;
             }
         }
 
         private async void VerifyToken(string token) {
-            // _tokenVerified = await _signInPanel.VerifyToken(token);
-            _tokenVerified = false;
+            _tokenVerified = await _signInPanel.VerifyToken(token);
+            
             if (_tokenVerified) {
                 PopupView.Instance.Close();
             } else {
