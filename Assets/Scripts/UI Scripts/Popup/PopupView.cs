@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +11,9 @@ namespace UI.Popup {
         [SerializeField] private GameObject _container;
         [SerializeField] private RectTransform _board;
         [SerializeField] private RectTransform _content;
+        [SerializeField] private Button _backButton;
+        [SerializeField] private Button _confirmButton;
+        [SerializeField] private TMP_Text _confirmButtonText;
 
         private bool _closeOnConfirm;
         private PopupObject _currentPopupObject;
@@ -39,6 +44,9 @@ namespace UI.Popup {
             _board.sizeDelta = size;
 
             _closeOnConfirm = popupObject.CloseOnConfirm;
+            _backButton.gameObject.SetActive(popupObject.HasBackButton);
+            _confirmButton.gameObject.SetActive(popupObject.HasConfirmButton);
+            _confirmButtonText.text = popupObject.ConfirmButtonText;
 
             return createdObject;
         }

@@ -18,32 +18,54 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
     /// To verify if the email is signed up in the server.
     /// </summary>
     /// <param name="email">The email to send request</param>
-    /// <returns>TRUE if the verification success</returns>
-    public async Task<bool> VerifyEmail(string email) {
-        EmailVerifyObject emailVerifyObject = new EmailVerifyObject() {
-            email = email
+    /// <returns>The request status (Success if email verified, Fail if does not, Error if connection problem to the API)</returns>
+    public async Task<CredentialStatus> VerifyEmail(string email) {
+        ApiSendObject<EmailVerifyMessage> apiSendObject = new ApiSendObject<EmailVerifyMessage>() {
+            body = new EmailVerifyMessage() {
+                email = email
+            }
         };
 
-        var uri = await UnipalClient.DoPostRequestAsync(emailVerificationAPI, emailVerifyObject);
-        Debug.Log(uri);
-
+        var unipalMsg = await UnipalClient.DoPostRequestAsync<EmailVerifyMessage, EmailVerifyReceiveMessage>(emailVerificationAPI, apiSendObject);
+        
         // TODO: Check if the email is good to go: it has to be in the system but not registered yet
+        if (unipalMsg.receiveMessageSuccess) {
+            if (unipalMsg.receivedMessage.responseCode.Equals("201")) {
+                return CredentialStatus.Success;
+            } else {
+                return CredentialStatus.Fail;
+            }
+        }
 
-        return true;
+        return CredentialStatus.Error;
     }
 
-    public async Task<bool> VerifyToken(string email, string token) {
-        TokenObject tokenVerifyObject = new TokenObject() {
-            email = email,
-            token = token
+    /// <summary>
+    /// To verify if the token matches the registered email.
+    /// </summary>
+    /// <param name="email">Email to register</param>
+    /// <param name="token">Token for the email</param>
+    /// <returns>The request status (Success if token verified successful, Fail if does not, Error if connection problem to the API)</returns>
+    public async Task<CredentialStatus> VerifyToken(string email, string token) {
+        ApiSendObject<TokenMessage> tokenVerifyObject = new ApiSendObject<TokenMessage>() {
+            body = new TokenMessage() {
+                email = email,
+                token = token
+            }
         };
 
-        var uri = await UnipalClient.DoPostRequestAsync(tokenVerificationAPI, tokenVerifyObject);
-        Debug.Log(uri);
+        var unipalMsg = await UnipalClient.DoPostRequestAsync<TokenMessage, TokenReceiveMessage>(tokenVerificationAPI, tokenVerifyObject);
 
-        // TODO: Check if the email is good to go: it has to be in the system but not registered yet
+        // TODO: Check if the token is good to go
+        if (unipalMsg.receiveMessageSuccess) {
+            if (unipalMsg.receivedMessage.responseCode.Equals("201")) {
+                return CredentialStatus.Success;
+            } else {
+                return CredentialStatus.Fail;
+            }
+        }
 
-        return true;
+        return CredentialStatus.Error;
     }
 
     /// <summary>
@@ -52,21 +74,36 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
     /// <param name="email">Email to sign up</param>
     /// <param name="password">Password to sign up</param>
     /// <param name="confirmPassword">To confirm the password if it is matched password or not</param>
-    public async Task<bool> Signup(string email, string password, string confirmPassword) {
-        // TODO: confirmPassword
+    /// <returns>The signup request status (Success if signup successful, Fail if does not, Error if connection problem to the API)</returns>
+    public async Task<SignupStatus> Signup(string email, string password, string confirmPassword) {
+        SignupStatus signupStatus = new SignupStatus();
+
+        // confirmPassword
         if (!password.Equals(confirmPassword)) {
-            return false;
+            signupStatus.status = CredentialStatus.Fail;
+            signupStatus.statusMessage = "Password does not match!";
+            return signupStatus;
         }
         
-        LoginObject loginObj = new() {
-            email = email,
-            password = password
+        ApiSendObject<SignupMessage> signupObject = new ApiSendObject<SignupMessage>() {
+            body = new SignupMessage() {
+                email = email,
+                password = password
+            }
         };
 
-        var uri = await UnipalClient.DoPostRequestAsync(signupAPI, loginObj);
-        Debug.Log(uri);
+        var unipalMsg = await UnipalClient.DoPostRequestAsync<SignupMessage, SignupReceiveMessage>(signupAPI, signupObject);
+        if (unipalMsg.receiveMessageSuccess) {
+            if (unipalMsg.receivedMessage.responseCode.Equals("201")) {
+                signupStatus.status = CredentialStatus.Success;
+                signupStatus.statusMessage = "Signing up account successfully";
+            } else {
+                signupStatus.status = CredentialStatus.Fail;
+                signupStatus.statusMessage = "There was an error signing up your account";
+            }
+        }
 
-        return true;
+        return signupStatus;
     }
 
     /// <summary>
@@ -74,47 +111,80 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
     /// </summary>
     /// <param name="email">Email to login</param>
     /// <param name="password">Password to login</param>
-    public async Task<bool> Login(string email, string password) {
-        LoginObject loginObj = new() {
-            email = email,
-            password = password
+    /// <returns>The request status (Success if login successful, Fail if does not, Error if connection problem to the API)</returns>
+    public async Task<CredentialStatus> Login(string email, string password) {
+        ApiSendObject<LoginMessage> loginObject = new ApiSendObject<LoginMessage>() {
+            body = new LoginMessage() {
+                email = email,
+                password = password
+            }
         };
 
-        // MainMenuController.Instance.ChangePanel(MainMenuPanelID.MainMenu);
+        var unipalMsg = await UnipalClient.DoPostRequestAsync<LoginMessage, LoginReceiveMessage>(loginAPI, loginObject);
+        if (unipalMsg.receiveMessageSuccess) {
+            if (unipalMsg.receivedMessage.responseCode.Equals("201")) {
+                return CredentialStatus.Success;
+            } else {
+                return CredentialStatus.Fail;
+            }
+        }
 
-        var uri = await UnipalClient.DoPostRequestAsync(loginAPI, loginObj);
-        Debug.Log(uri);
-
-        return true;
-
-        // Status obj = JsonUtility.FromJson<Status>(uri);
-
-        // Debug.Log($"After Json: email = {obj.body}, password = {password}");
+        return CredentialStatus.Error;
     }
 }
 
-public struct EmailVerifyObject {
+#region Used for LoginController to return the message status of the API request
+public enum CredentialStatus {
+    Success,
+    Fail,
+    Error
+}
+
+public struct SignupStatus {
+    public CredentialStatus status;
+    public string statusMessage;
+}
+#endregion
+
+#region Email Verify
+public struct EmailVerifyMessage {
     public string email;
 }
 
-public struct TokenObject {
+public struct EmailVerifyReceiveMessage {
+    public string message;
+}
+#endregion
+
+#region Token
+public struct TokenMessage {
     public string email;
     public string token;
 }
 
-public struct LoginObject {
+public struct TokenReceiveMessage {
+
+}
+#endregion
+
+#region Signup
+public struct SignupMessage {
     public string email;
     public string password;
 }
 
-public struct Status {
-    public string status;
-    public string body;
+public struct SignupReceiveMessage {
+
+}
+#endregion
+
+#region Login
+public struct LoginMessage {
+    public string email;
+    public string password;
 }
 
+public struct LoginReceiveMessage {
 
-/*
-{
-    "email": "7as8d9as"
 }
-*/
+#endregion

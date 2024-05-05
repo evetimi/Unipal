@@ -25,26 +25,34 @@ namespace UI.Logins {
         }
 
         private async void VerifyEmail() {
-            _verified = await _signInPanel.VerifyEmail();
+            CredentialStatus verify = await _signInPanel.VerifyEmail();
             
-            if (_verified) {
-                _createdTokenPopup = PopupView.Instance.Open(_tokenPopupPrefab, null, VerifyToken) as TokenPopup;
+            if (verify == CredentialStatus.Success) {
+                _createdTokenPopup = PopupView.Instance.Open(_tokenPopupPrefab, CancelToken, VerifyToken) as TokenPopup;
             }
+
+            _verified = verify == CredentialStatus.Success;
+        }
+
+        private void CancelToken(string _) {
+            BackToEmail();
         }
 
         private async void VerifyToken(string token) {
-            _tokenVerified = await _signInPanel.VerifyToken(token);
+            CredentialStatus tokenVerify = await _signInPanel.VerifyToken(token);
             
-            if (_tokenVerified) {
+            if (tokenVerify == CredentialStatus.Success) {
                 PopupView.Instance.Close();
-            } else {
+            } else if (tokenVerify == CredentialStatus.Fail) {
                 _createdTokenPopup.SetErrorMessage(true);
             }
+
+            _tokenVerified = tokenVerify == CredentialStatus.Success;
         }
 
         private async void SignUp() {
-            bool signup = await _signInPanel.SignUp();
-            if (signup) {
+            SignupStatus signup = await _signInPanel.SignUp();
+            if (signup.status == CredentialStatus.Success) {
                 BackToEmail();
                 _loginMenuContainer.ChangePanel(LoginPanelID.Login);
             }
@@ -74,10 +82,9 @@ namespace UI.Logins {
         }
 
         public async void ClickLoginButton() {
-            // bool login = await _loginPanel.Login();
-            bool login = true;
+            CredentialStatus login = await _loginPanel.Login();
 
-            if (login) {
+            if (login == CredentialStatus.Success) {
                 // TODO: go to main menu
                 MainMenuController.Instance.MainMenuContainer.ChangeStudentMenu();
             }

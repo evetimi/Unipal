@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Aspose.Email</id>
+    <version>24.4.0</version>
+    <title>Aspose.Email for .NET</title>
+    <authors>Aspose</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="file">License\Aspose_End-User-License-Agreement.txt</license>
+    <licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>
+    <icon>Images\aspose_email-for-net.png</icon>
+    <projectUrl>https://products.aspose.com/email/net</projectUrl>
+    <description>Aspose.Email for .NET is an Email Processing API that allows the developers to work with email formats, protocols and services without using Microsoft Outlook® or Office Automation.</description>
+    <releaseNotes>https://releases.aspose.com/email/net/release-notes/2024/aspose-email-for-net-24-4-release-notes/</releaseNotes>
+    <copyright>© Aspose Pty Ltd 2001-2024. All Rights Reserved.</copyright>
+    <tags>Email eml msg pst ost outlook olm Exchange EWS imap smtp pop3 thef mht mbox Xamarin Mac Android iOS</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework2.0" />
+      <group targetFramework=".NETFramework3.5" />
+      <group targetFramework=".NETFramework3.5-Client" />
+      <group targetFramework=".NETFramework4.0" />
+      <group targetFramework=".NETFramework4.0-Client" />
+      <group targetFramework=".NETFramework4.5" />
+      <group targetFramework="net5.0">
+        <dependency id="System.Security.Cryptography.Pkcs" version="7.0.3" exclude="Build,Analyzers" />
+        <dependency id="System.Text.Encoding.CodePages" version="5.0.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="net6.0">
+        <dependency id="System.Security.Cryptography.Pkcs" version="7.0.3" exclude="Build,Analyzers" />
+        <dependency id="System.Text.Encoding.CodePages" version="5.0.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="System.Security.Cryptography.Pkcs" version="7.0.3" exclude="Build,Analyzers" />
+        <dependency id="System.Text.Encoding.CodePages" version="5.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework=".NETFramework2.0, .NETFramework3.5, .NETFramework3.5-Client, .NETFramework4.0, .NETFramework4.0-Client, .NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Management" targetFramework=".NETFramework2.0, .NETFramework3.5, .NETFramework3.5-Client, .NETFramework4.0, .NETFramework4.0-Client, .NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Security" targetFramework=".NETFramework2.0, .NETFramework3.5, .NETFramework3.5-Client, .NETFramework4.0, .NETFramework4.0-Client, .NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Web.Services" targetFramework=".NETFramework2.0, .NETFramework3.5, .NETFramework3.5-Client, .NETFramework4.0, .NETFramework4.0-Client, .NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Windows.Forms" targetFramework=".NETFramework2.0, .NETFramework3.5, .NETFramework3.5-Client, .NETFramework4.0, .NETFramework4.0-Client, .NETFramework4.5" />
+      <frameworkAssembly assemblyName="PresentationCore" targetFramework=".NETFramework3.5, .NETFramework3.5-Client, .NETFramework4.0, .NETFramework4.0-Client, .NETFramework4.5" />
+      <frameworkAssembly assemblyName="PresentationFramework" targetFramework=".NETFramework3.5, .NETFramework3.5-Client, .NETFramework4.0, .NETFramework4.0-Client, .NETFramework4.5" />
+      <frameworkAssembly assemblyName="ReachFramework" targetFramework=".NETFramework3.5, .NETFramework3.5-Client, .NETFramework4.0, .NETFramework4.0-Client, .NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Printing" targetFramework=".NETFramework3.5, .NETFramework3.5-Client, .NETFramework4.0, .NETFramework4.0-Client, .NETFramework4.5" />
+      <frameworkAssembly assemblyName="WindowsBase" targetFramework=".NETFramework3.5, .NETFramework3.5-Client, .NETFramework4.0, .NETFramework4.0-Client, .NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Xaml" targetFramework=".NETFramework4.0, .NETFramework4.0-Client, .NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Net.Http" targetFramework=".NETFramework4.5" />
+    </frameworkAssemblies>
+  </metadata>
+</package>

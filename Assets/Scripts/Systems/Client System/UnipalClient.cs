@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Net.Sockets;
+using System.Net;
 
 /// <summary>
 /// The class which is used to create connection and provide functionality to send request to the server.
@@ -12,7 +14,7 @@ using UnityEngine;
 public static class UnipalClient {
     public static HttpClient client;
     public static Action<object> OnBeforeSendingRequest;
-    public static Action<string> OnAfterSendingRequest;
+    public static Action<UnipalMessage> OnAfterSendingRequest;
 
     /// <summary>
     /// To validate the connection to the server.
@@ -30,29 +32,43 @@ public static class UnipalClient {
 
         return true;
     }
-
+    
     /// <summary>
     /// To send POST request to the server API, the method will wait until the server response before returning the result.
     /// </summary>
-    /// <typeparam name="T">The object type to send request to the API.</typeparam>
+    /// <typeparam name="SendType">The object type to send request to the API.</typeparam>
+    /// <typeparam name="ReceiveType">The object type to receive response from the API.</typeparam>
     /// <param name="apiUrl">The API path to send request. This DOES NOT include the IP address.</param>
     /// <param name="requestObj">The object to send request.</param>
-    /// <returns>The response message from the server, this will be the JSON format.</returns>
-    public static async Task<string> DoPostRequestAsync<T>(string apiUrl, T requestObj) {
+    /// <returns>The response UnipalMessage from the server that will be converted to an object of ReceiveType.</returns>
+    public static async Task<UnipalMessage<ReceiveType>> DoPostRequestAsync<SendType, ReceiveType>(string apiUrl, ApiSendObject<SendType> requestObj) {
         if (!ValidateHttpClient()) {
             return null;
         }
 
         OnBeforeSendingRequest?.Invoke(requestObj);
 
-        HttpResponseMessage response = await client.PostAsJsonAsync(
-            $"api/{apiUrl}", requestObj
-        );
+        UnipalMessage<ReceiveType> msg = new();
 
-        var responseString = await response.Content.ReadAsStringAsync();
+        try {
+            HttpResponseMessage response = await client.PostAsJsonAsync(
+                $"api/{apiUrl}", requestObj
+            );
 
-        OnAfterSendingRequest?.Invoke(responseString);
+            string responseString = await response.Content.ReadAsStringAsync();
+
+            msg.receiveMessageSuccess = true;
+            msg.failedMessage = "";
+            msg.receivedMessage = JsonUtility.FromJson<ApiReceiveObject<ReceiveType>>(responseString);
+        } catch (Exception e) {
+            string responseString = e.InnerException.Message;
+            msg.receiveMessageSuccess = false;
+            msg.failedMessage = responseString;
+            msg.receivedMessage = null;
+        }
+
+        OnAfterSendingRequest?.Invoke(msg);
         
-        return responseString;
+        return msg;
     }
 }
