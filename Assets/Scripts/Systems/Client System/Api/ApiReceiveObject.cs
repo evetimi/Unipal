@@ -1,5 +1,5 @@
 public class ApiReceiveObject<T> {
-    public string responseCode;
+    public string status;
     public T body;
 }
 
