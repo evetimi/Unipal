@@ -29,8 +29,7 @@ public class Testtttttt : MonoBehaviour
     //     StartCoroutine(qqqqqq());
     // }
 
-    IEnumerator qqqqqq()
-    {
+    // IEnumerator qqqqqq() {
         // string url = $"{apiUrl}?filename={filename}&module_id={moduleId}&week_number={weekNumber}";
         // UnityWebRequest www = UnityWebRequest.Get(url);
         // yield return www.SendWebRequest();
@@ -47,7 +46,7 @@ public class Testtttttt : MonoBehaviour
         // {
         //     Debug.LogError($"Failed to download file. Error: {www.error}");
         // }
-    }
+    // }
 }
 
 [System.Serializable]

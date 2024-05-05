@@ -30,7 +30,7 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
         
         // TODO: Check if the email is good to go: it has to be in the system but not registered yet
         if (unipalMsg.receiveMessageSuccess) {
-            if (unipalMsg.receivedMessage.responseCode.Equals("201")) {
+            if (unipalMsg.receivedMessage.status.Equals("201")) {
                 return CredentialStatus.Success;
             } else {
                 return CredentialStatus.Fail;
@@ -58,7 +58,7 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
 
         // TODO: Check if the token is good to go
         if (unipalMsg.receiveMessageSuccess) {
-            if (unipalMsg.receivedMessage.responseCode.Equals("201")) {
+            if (unipalMsg.receivedMessage.status.Equals("201")) {
                 return CredentialStatus.Success;
             } else {
                 return CredentialStatus.Fail;
@@ -94,7 +94,7 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
 
         var unipalMsg = await UnipalClient.DoPostRequestAsync<SignupMessage, SignupReceiveMessage>(signupAPI, signupObject);
         if (unipalMsg.receiveMessageSuccess) {
-            if (unipalMsg.receivedMessage.responseCode.Equals("201")) {
+            if (unipalMsg.receivedMessage.status.Equals("201")) {
                 signupStatus.status = CredentialStatus.Success;
                 signupStatus.statusMessage = "Signing up account successfully";
             } else {
@@ -122,7 +122,7 @@ public class LoginController : MonoBehaviourSingleton<LoginController>
 
         var unipalMsg = await UnipalClient.DoPostRequestAsync<LoginMessage, LoginReceiveMessage>(loginAPI, loginObject);
         if (unipalMsg.receiveMessageSuccess) {
-            if (unipalMsg.receivedMessage.responseCode.Equals("201")) {
+            if (unipalMsg.receivedMessage.status.Equals("201")) {
                 return CredentialStatus.Success;
             } else {
                 return CredentialStatus.Fail;
