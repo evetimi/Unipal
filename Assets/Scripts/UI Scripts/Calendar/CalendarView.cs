@@ -74,7 +74,8 @@ namespace UI.Calendars {
                     if (year == startDate.Year && month == startDate.Month && day == startDate.Day) {
                         // TODO: set has event
                         Appointment app = appointments[currentIndex];
-                        calendarObject.AddEvent(app.Description, app.Location, startDate, app.EndDate, new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f)));
+                        ColorUtility.TryParseHtmlString(app.Summary, out Color color);
+                        calendarObject.AddEvent(app.Description, app.Location, startDate, app.EndDate, color);
 
                         hasEvent = true;
                         currentIndex++;

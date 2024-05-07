@@ -1,6 +1,7 @@
 {
     "emailVerification":"emailVerification.php",
-    "tokenVerification":"tokenVerification.php",
-    "login":"login.php",
-    "signup":"signup.php"
+    "tokenVerification":"token.php",
+    "login":"userLogin.php",
+    "signup":"userSignup.php",
+    "enrollUser":"admin_userSignup.php"
 }

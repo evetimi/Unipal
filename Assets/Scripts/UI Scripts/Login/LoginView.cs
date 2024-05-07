@@ -5,6 +5,7 @@ using UI.Menu.PanelIDs;
 using UI.Popup;
 using Unipal.Controller.Login;
 using Unipal.Controller.User;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace UI.Logins {
@@ -13,6 +14,7 @@ namespace UI.Logins {
         [SerializeField] private SignInPanel _signInPanel;
         [SerializeField] private LoginPanel _loginPanel;
         [SerializeField] private TokenPopup _tokenPopupPrefab;
+        [SerializeField] private ConfirmPopupObject _confirmPopupPrefab;
 
         private bool _verified;
         private bool _tokenVerified;
@@ -84,12 +86,20 @@ namespace UI.Logins {
         }
 
         public async void ClickLoginButton() {
-            CredentialStatus login = await _loginPanel.Login();
+            LoginStatus login = await _loginPanel.Login();
 
-            if (login == CredentialStatus.Success) {
+            if (login.status == CredentialStatus.Success) {
                 // TODO: check the user type, go to main menu of that user
-                new AdminController(null);
-                MainMenuController.Instance.MainMenuContainer.ChangeAdminMenu();
+
+                if (login.userType == UserType.Student) {
+                    new StudentController(null);
+                    MainMenuController.Instance.MainMenuContainer.ChangeStudentMenu();
+                } else {
+                    new AdminController(null);
+                    MainMenuController.Instance.MainMenuContainer.ChangeAdminMenu();
+                }
+            } else {
+                PopupView.Instance.Open(_confirmPopupPrefab, null, null);
             }
         }
     }

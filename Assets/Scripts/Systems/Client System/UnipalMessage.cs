@@ -3,6 +3,10 @@ namespace Unipal.API {
         public bool receiveMessageSuccess;
         public string failedMessage;
         public object receivedMessage;
+
+        public override string ToString() {
+            return $"{receiveMessageSuccess} - {failedMessage} - {receivedMessage.ToString()}";
+        }
     }
 
     public class UnipalMessage<ReceiveType> : UnipalMessage {

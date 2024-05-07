@@ -10,6 +10,7 @@ namespace Unipal.API {
         public string tokenVerification;
         public string login;
         public string signup;
+        public string enrollUser;
     }
 
     public static class ApiPathContainer {

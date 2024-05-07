@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Unipal.API;
+using Unipal.Controller.User;
 using UnityEngine;
 
 namespace Unipal.Controller.Login {
@@ -58,7 +59,7 @@ namespace Unipal.Controller.Login {
                 }
             };
 
-            var unipalMsg = await UnipalClient.DoPostRequestAsync<TokenMessage, TokenReceiveMessage>(ApiPathContainer.ApiPath.tokenVerification, tokenVerifyObject);
+            var unipalMsg = await UnipalClient.DoPostRequestAsync<TokenMessage, string>(ApiPathContainer.ApiPath.tokenVerification, tokenVerifyObject);
 
             // TODO: Check if the token is good to go
             if (unipalMsg.receiveMessageSuccess) {
@@ -96,7 +97,7 @@ namespace Unipal.Controller.Login {
                 }
             };
 
-            var unipalMsg = await UnipalClient.DoPostRequestAsync<SignupMessage, SignupReceiveMessage>(ApiPathContainer.ApiPath.signup, signupObject);
+            var unipalMsg = await UnipalClient.DoPostRequestAsync<SignupMessage, string>(ApiPathContainer.ApiPath.signup, signupObject);
             if (unipalMsg.receiveMessageSuccess) {
                 if (unipalMsg.receivedMessage.status.Equals("201")) {
                     signupStatus.status = CredentialStatus.Success;
@@ -116,7 +117,7 @@ namespace Unipal.Controller.Login {
         /// <param name="email">Email to login</param>
         /// <param name="password">Password to login</param>
         /// <returns>The request status (Success if login successful, Fail if does not, Error if connection problem to the API)</returns>
-        public async Task<CredentialStatus> Login(string email, string password) {
+        public async Task<LoginStatus> Login(string email, string password) {
             ApiSendObject<LoginMessage> loginObject = new ApiSendObject<LoginMessage>() {
                 body = new LoginMessage() {
                     email = email,
@@ -125,15 +126,28 @@ namespace Unipal.Controller.Login {
             };
 
             var unipalMsg = await UnipalClient.DoPostRequestAsync<LoginMessage, LoginReceiveMessage>(ApiPathContainer.ApiPath.login, loginObject);
+
+            LoginStatus loginStatus = new();
+
             if (unipalMsg.receiveMessageSuccess) {
-                if (unipalMsg.receivedMessage.status.Equals("201")) {
-                    return CredentialStatus.Success;
+                if (unipalMsg.receivedMessage.status.Equals("200")) {
+
+                    // TODO: create user object here
+                    if (unipalMsg.receivedMessage.body.type == "1") {
+                        loginStatus.userType = UserType.Student;
+                    } else {
+                        loginStatus.userType = UserType.Teacher;
+                    }
+
+                    loginStatus.status = CredentialStatus.Success;
                 } else {
-                    return CredentialStatus.Fail;
+                    loginStatus.status = CredentialStatus.Fail;
                 }
+            } else {
+                loginStatus.status = CredentialStatus.Error;
             }
 
-            return CredentialStatus.Error;
+            return loginStatus;
         }
     }
 
@@ -147,6 +161,11 @@ namespace Unipal.Controller.Login {
     public struct SignupStatus {
         public CredentialStatus status;
         public string statusMessage;
+    }
+
+    public struct LoginStatus {
+        public CredentialStatus status;
+        public UserType userType;
     }
     #endregion
 
@@ -189,7 +208,13 @@ namespace Unipal.Controller.Login {
     }
 
     public struct LoginReceiveMessage {
-
+        public string id;
+        public string name;
+        public string surname;
+        public string email;
+        public string address;
+        public string type;
+        public string cellphone;
     }
     #endregion
 }

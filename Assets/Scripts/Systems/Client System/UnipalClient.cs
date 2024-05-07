@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Net.Sockets;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace Unipal.API {
     /// <summary>
@@ -24,7 +25,7 @@ namespace Unipal.API {
         public static bool ValidateHttpClient() {
             if (client == null) {
                 client = new HttpClient();
-                client.BaseAddress = new Uri("http://13.60.19.3/");
+                client.BaseAddress = new Uri("http://13.60.35.1/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
                     new MediaTypeWithQualityHeaderValue("application/json")
@@ -57,15 +58,23 @@ namespace Unipal.API {
                 );
 
                 string responseString = await response.Content.ReadAsStringAsync();
+                Debug.Log("API sent: " + responseString);
 
                 msg.receiveMessageSuccess = true;
                 msg.failedMessage = "";
-                msg.receivedMessage = JsonUtility.FromJson<ApiReceiveObject<ReceiveType>>(responseString);
+                msg.receivedMessage = JsonConvert.DeserializeObject<ApiReceiveObject<ReceiveType>>(responseString);
             } catch (Exception e) {
-                string responseString = e.InnerException.Message;
+                string responseString;
+                if (e.InnerException != null) {
+                    responseString = e.InnerException.Message;
+                } else {
+                    responseString = e.Message;
+                }
                 msg.receiveMessageSuccess = false;
                 msg.failedMessage = responseString;
                 msg.receivedMessage = null;
+
+                Debug.LogError("Error Message: " + responseString);
             }
 
             OnAfterSendingRequest?.Invoke(msg);

@@ -10,9 +10,9 @@ namespace UI.Logins {
         [SerializeField] private TMP_InputField _emailInput;
         [SerializeField] private TMP_InputField _passwordInput;
 
-        public async Task<CredentialStatus> Login() {
-            // return await LoginController.Instance.Login(_emailInput.text, _passwordInput.text);
-            return CredentialStatus.Success;
+        public async Task<LoginStatus> Login() {
+            return await LoginController.Instance.Login(_emailInput.text, _passwordInput.text);
+            // return CredentialStatus.Success;
         }
     }
 }
