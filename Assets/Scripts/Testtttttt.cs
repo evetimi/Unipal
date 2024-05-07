@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Sirenix.OdinInspector;
+using Unipal.API;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -20,7 +21,7 @@ public class Testtttttt : MonoBehaviour
         ApiSendObject<TestObject> send = new ApiSendObject<TestObject>() {
             body = obj
         };
-        var receive = await UnipalClient.DoPostRequestAsync<TestObject, string>(api, send);
+        var receive = await UnipalClient.DoPostRequestAsync<TestObject, Response>(api, send);
         Debug.Log($"Success: {receive.receiveMessageSuccess} ; failed: {receive.failedMessage} ; body: {receive.receivedMessage.body}");
     }
 
@@ -56,5 +57,10 @@ public struct TestObject {
     public string email;
     public string address;
     public string cellphone;
-    public DateTime dob;
+    public string dob;
+}
+
+public struct Response {
+    public string message;
+    public string token;
 }

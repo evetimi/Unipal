@@ -1,0 +1,6 @@
+{
+    "emailVerification":"emailVerification.php",
+    "tokenVerification":"tokenVerification.php",
+    "login":"login.php",
+    "signup":"signup.php"
+}

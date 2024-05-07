@@ -20,5 +20,9 @@ namespace UI.Menu {
         public void ChangeModule() {
             ChangePanel(StudentPanelID.Module);
         }
+
+        public void ChangeCalendar() {
+            ChangePanel(StudentPanelID.Calendar);
+        }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UI.Menu;
 using UI.Menu.PanelIDs;
 using UI.Popup;
+using Unipal.Controller.Login;
+using Unipal.Controller.User;
 using UnityEngine;
 
 namespace UI.Logins {
@@ -85,8 +87,9 @@ namespace UI.Logins {
             CredentialStatus login = await _loginPanel.Login();
 
             if (login == CredentialStatus.Success) {
-                // TODO: go to main menu
-                MainMenuController.Instance.MainMenuContainer.ChangeStudentMenu();
+                // TODO: check the user type, go to main menu of that user
+                new AdminController(null);
+                MainMenuController.Instance.MainMenuContainer.ChangeAdminMenu();
             }
         }
     }

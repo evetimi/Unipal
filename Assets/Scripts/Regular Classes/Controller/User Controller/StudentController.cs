@@ -4,8 +4,8 @@ using Unipal.Model.User;
 using UnityEngine;
 
 namespace Unipal.Controller.User {
-    public class StudentController : UserController<StudentController> {
-        [SerializeField] private string ass = "";
+    public class StudentController : UserController {
+        public static StudentController Instance { get; private set; }
 
         public new Student CurrentLoggedAccount {
             get => (Student)base.CurrentLoggedAccount;
@@ -15,6 +15,10 @@ namespace Unipal.Controller.User {
                 }
                 base.CurrentLoggedAccount = value;
             }
+        }
+
+        public StudentController(UserAccount userAccount) : base(userAccount) {
+            Instance = this;
         }
 
         // When get info from the API, the information will be stored in this class.
