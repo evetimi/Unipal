@@ -51,4 +51,8 @@ public class MainMenuController : MonoBehaviourSingleton<MainMenuController>
     public void SetLocalBackgroundDefaultScale() {
         ScaleLocalBackgroundCircle(_defaultCircleLocalScales);
     }
+
+    public void Logout() {
+        _mainMenuContainer.ChangeLogIn();
+    }
 }

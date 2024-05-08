@@ -6,13 +6,25 @@ namespace Unipal.Model.User {
     public abstract class UserAccount {
         private string id;
         private string name;
+        private string surname;
+        private string email;
+        private string address;
+        private string phoneNumber;
 
-        public string Id => id;
-        public string Name => name;
+        public string Id { get => id; set { id = value; } }
+        public string Name { get => name; set { name = value; } }
+        public string Surname { get => surname; set { surname = value; } }
+        public string Email { get => email; set { email = value; } }
+        public string Address { get => address; set { address = value; } }
+        public string PhoneNumber { get => phoneNumber; set { phoneNumber = value; } }
 
-        public UserAccount(string id, string name) {
+        public UserAccount(string id, string name, string surname, string email, string address, string phoneNumber) {
             this.id = id;
             this.name = name;
+            this.surname = surname;
+            this.email = email;
+            this.address = address;
+            this.phoneNumber = phoneNumber;
         }
     }
 }

@@ -34,27 +34,30 @@ namespace UI.Menu {
 
             // studentMenuContainer.ChangeMainMenu();
 
-            if (_currentMenu != null) {
-                Destroy(_currentMenu);
-            }
+            GameObject newMenu = ChangePanel(MainMenuPanelID.StudentMenu).gameObject;
 
-            _currentMenu = ChangePanel(MainMenuPanelID.StudentMenu).gameObject;
+            if (newMenu != _currentMenu) {
+                Destroy(_currentMenu);
+                _currentMenu = newMenu;
+            }
         }
 
         public void ChangeTeacherMenu() {
-            if (_currentMenu != null) {
-                Destroy(_currentMenu);
-            }
+            GameObject newMenu = ChangePanel(MainMenuPanelID.TeacherMenu).gameObject;
 
-            _currentMenu = ChangePanel(MainMenuPanelID.TeacherMenu).gameObject;
+            if (newMenu != _currentMenu) {
+                Destroy(_currentMenu);
+                _currentMenu = newMenu;
+            }
         }
 
         public void ChangeAdminMenu() {
-            if (_currentMenu != null) {
-                Destroy(_currentMenu);
-            }
+            GameObject newMenu = ChangePanel(MainMenuPanelID.AdminMenu).gameObject;
 
-            _currentMenu = ChangePanel(MainMenuPanelID.AdminMenu).gameObject;
+            if (newMenu != _currentMenu) {
+                Destroy(_currentMenu);
+                _currentMenu = newMenu;
+            }
         }
     }
 }

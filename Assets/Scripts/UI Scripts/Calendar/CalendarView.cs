@@ -91,20 +91,80 @@ namespace UI.Calendars {
         [Button]
         private void GenerateTestAppointments() {
             using (var calendar = new CalendarWriter("Assets/calendar.ics")) {
-                for (int i = 0; i < 40; i++) {
-                    int day = UnityEngine.Random.Range(1, 32);
-                    int hour = UnityEngine.Random.Range(0, 20);
+                string[] modules = new string[] {
+                    "Cyber Security",
+                    "Collaborative Development",
+                    "Cloud Security"
+                };
+                string[] rooms = new string[] {
+                    "Classroom 1",
+                    "Classroom 2",
+                    "Classroom 1"
+                };
+                int day = 6;
+                int hour = 14;
+                for (int i = 0; i < 4; i++) {
                     var appointment = new Appointment(
-                        "Meeting Room A",
-                        "Team Meeting",
-                        "Please confirm your availability.",
+                        rooms[0],
+                        "0000FF",
+                        modules[0],
                         new DateTime(2024, 5, day, hour, 0, 0),
-                        new DateTime(2024, 5, day, hour + 2, 0, 0),
+                        new DateTime(2024, 5, day, hour + 3, 0, 0),
                         "sunmoon14103@gmail.com",
                         "sunmoon14103@gmail.com"
                     );
 
                     calendar.Write(appointment);
+                    day += 7;
+                }
+
+                day = 7;
+                hour = 18;
+                for (int i = 0; i < 4; i++) {
+                    var appointment = new Appointment(
+                        rooms[1],
+                        "0000FF",
+                        modules[1],
+                        new DateTime(2024, 5, day, hour, 0, 0),
+                        new DateTime(2024, 5, day, hour + 3, 0, 0),
+                        "sunmoon14103@gmail.com",
+                        "sunmoon14103@gmail.com"
+                    );
+
+                    calendar.Write(appointment);
+                    day += 7;
+                }
+
+                day = 8;
+                for (int i = 0; i < 4; i++) {
+                    var appointment = new Appointment(
+                        rooms[2],
+                        "0000FF",
+                        modules[2],
+                        new DateTime(2024, 5, day, hour, 0, 0),
+                        new DateTime(2024, 5, day, hour + 3, 0, 0),
+                        "sunmoon14103@gmail.com",
+                        "sunmoon14103@gmail.com"
+                    );
+
+                    calendar.Write(appointment);
+                    day += 7;
+                }
+
+                day = 6;
+                for (int i = 0; i < 4; i++) {
+                    var appointment = new Appointment(
+                        rooms[2],
+                        "0000FF",
+                        modules[2],
+                        new DateTime(2024, 5, day, hour, 0, 0),
+                        new DateTime(2024, 5, day, hour + 3, 0, 0),
+                        "sunmoon14103@gmail.com",
+                        "sunmoon14103@gmail.com"
+                    );
+
+                    calendar.Write(appointment);
+                    day += 7;
                 }
             };
         }

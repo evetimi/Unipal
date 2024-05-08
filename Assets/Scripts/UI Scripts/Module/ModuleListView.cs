@@ -24,11 +24,11 @@ namespace UI.Modules {
         public void ValidateModuleList() {
             // get the list of attended modules of the user through the Module Controller
             Module[] modules = new Module[] {
-                new Module("1", "System", "OK!"),
-                new Module("1", "Computer Science", "CS!"),
-                new Module("1", "UI/UX", "User Interface."),
-                new Module("1", "C# Programming", "Nice!"),
-                new Module("1", "Idk?", "Huh?")
+                new Module("5CI022", "Databases", "Databases"),
+                new Module("5CS019", "Object-Oriented Design and Programming", "Object-Oriented Design and Programming"),
+                new Module("5CS020", "Human - Computer Interaction", "Human - Computer Interaction"),
+                new Module("5CS021", "Numerical Methods and Concurrency", "Numerical Methods and Concurrency"),
+                new Module("5CS024", "Collaborative Development", "Collaborative Development")
             };
 
             _moduleComponentList ??= new List<ModuleComponent>(modules.Length);

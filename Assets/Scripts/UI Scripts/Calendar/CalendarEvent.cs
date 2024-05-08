@@ -34,11 +34,15 @@ namespace UI.Calendars {
             _endTime = endTime;
 
             if (_startTimeText != null && _startTime != null) {
-                _startTimeText.text = $"{_startTime.Hour}:{_startTime.Minute}";
+                string hour = _startTime.Hour < 10 ? $"0{_startTime.Hour}" : _startTime.Hour.ToString();
+                string minute = _startTime.Minute < 10 ? $"0{_startTime.Minute}" : _startTime.Hour.ToString();
+                _startTimeText.text = $"{hour}:{minute}";
             }
 
             if (_endTimeText != null && _endTime != null) {
-                _endTimeText.text = $"{_endTime.Hour}:{_endTime.Minute}";
+                string hour = _endTime.Hour < 10 ? $"0{_endTime.Hour}" : _endTime.Hour.ToString();
+                string minute = _endTime.Minute < 10 ? $"0{_endTime.Minute}" : _endTime.Hour.ToString();
+                _endTimeText.text = $"{hour}:{minute}";
             }
         }
 

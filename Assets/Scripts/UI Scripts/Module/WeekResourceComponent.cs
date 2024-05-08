@@ -53,11 +53,9 @@ namespace UI.Modules {
 
             // get the list of attended modules of the user through the Module Controller
             Resource[] resources = new Resource[] {
-                new Resource("1", "System", "OK!", "Link"),
-                new Resource("1", "Computer Science", "CS!", "Link"),
-                new Resource("1", "UI/UX", "User Interface.", "Link"),
-                new Resource("1", "C# Programming", "Nice!", "Link"),
-                new Resource("1", "Idk?", "Huh?", "Link")
+                new Resource("1", "5CI022 Sample Structure Part 1 portfolio.docx", "5CI022 Sample Structure Part 1 portfolio.docx", "Link"),
+                new Resource("1", "5CI022 Assessement Topics 2023-2024 SEM1.docx", "5CI022 Assessement Topics 2023-2024 SEM1.docx", "Link"),
+                new Resource("1", "5CI022 Coursework UPDATED STUDENT VERSION 2023-2024.docx", "5CI022 Coursework UPDATED STUDENT VERSION 2023-2024.docx", "Link")
             };
 
             _resourceComponentList ??= new List<ResourceComponent>(resources.Length);

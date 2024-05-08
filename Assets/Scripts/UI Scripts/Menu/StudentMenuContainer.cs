@@ -11,28 +11,53 @@ namespace UI.Menu {
         [SerializeField] private Transform _homeLocation;
         [SerializeField] private Transform _profileLocation;
 
+        private void Start() {
+            OnAfterTransition += OnAfterChangePanel;
+        }
+
         public void ChangeMainMenu() {
             ChangePanel(StudentPanelID.MainMenu);
-            _indicator.DOMove(_homeLocation.position, 0.2f);
         }
 
         public void ChangeProfile() {
             ChangePanel(StudentPanelID.Profile);
-            _indicator.DOMove(_profileLocation.position, 0.2f);
         }
 
         public void ChangeModuleList() {
             ChangePanel(StudentPanelID.ModuleList);
-            _indicator.DOMove(_bookLocation.position, 0.2f);
         }
 
         public void ChangeModule() {
             ChangePanel(StudentPanelID.Module);
-            _indicator.DOMove(_bookLocation.position, 0.2f);
         }
 
         public void ChangeCalendar() {
             ChangePanel(StudentPanelID.Calendar);
+        }
+
+        private void OnAfterChangePanel(StudentPanelID panelID) {
+            switch (panelID) {
+                case StudentPanelID.MainMenu: {
+                    MoveIndicator(_homeLocation);
+                    break;
+                }
+                case StudentPanelID.ModuleList: {
+                    MoveIndicator(_bookLocation);
+                    break;
+                }
+                case StudentPanelID.Module: {
+                    MoveIndicator(_homeLocation);
+                    break;
+                }
+                case StudentPanelID.Profile: {
+                    MoveIndicator(_profileLocation);
+                    break;
+                }
+            }
+        }
+
+        private void MoveIndicator(Transform location) {
+            _indicator.DOMove(location.position, 0.2f);
         }
     }
 }

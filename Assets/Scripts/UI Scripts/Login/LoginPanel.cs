@@ -14,5 +14,10 @@ namespace UI.Logins {
             return await LoginController.Instance.Login(_emailInput.text, _passwordInput.text);
             // return CredentialStatus.Success;
         }
+
+        public void ResetCreditials() {
+            _emailInput.text = "";
+            _passwordInput.text = "";
+        }
     }
 }

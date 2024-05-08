@@ -140,5 +140,11 @@ namespace UI.Logins {
             _passwordInput.text = "";
             _passwordConfirmInput.text = "";
         }
+
+        public void ResetCreditials() {
+            _emailInput.text = "";
+            _passwordInput.text = "";
+            _passwordConfirmInput.text = "";
+        }
     }
 }

@@ -8,6 +8,8 @@ using Utilities;
 namespace UI.Menu {
     public abstract class MenuContainer<T> : MonoBehaviour where T : Enum {
         [FoldoutGroup("Menu Container"), SerializeField] private float _transitionWaitTime = 0.2f;
+        [FoldoutGroup("Menu Container"), SerializeField] public Action<T> OnBeforeTransition;
+        [FoldoutGroup("Menu Container"), SerializeField] public Action<T> OnAfterTransition;
         [FoldoutGroup("Menu Container"), SerializeField, ListDrawerSettings(DraggableItems = false)] private List<Panel> _panels;
 
         [System.Serializable]
@@ -39,7 +41,7 @@ namespace UI.Menu {
             }
         }
 
-        private void Awake() {
+        protected virtual void Awake() {
             foreach (var panel in _panels) {
                 if (panel.isPrefab) {
                     panel.panel = null;
@@ -65,6 +67,8 @@ namespace UI.Menu {
         }
 
         private IEnumerator ChangePanel(Panel target) {
+            OnBeforeTransition?.Invoke(target.panelId);
+
             if (_currentActive != null) {
                 _currentActive.panel.SetEnabled(false);
             }
@@ -73,6 +77,8 @@ namespace UI.Menu {
 
             _currentActive = target;
             target.panel.SetEnabled(true);
+
+            OnAfterTransition?.Invoke(target.panelId);
         }
     }
 }

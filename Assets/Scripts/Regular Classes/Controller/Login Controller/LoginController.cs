@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Unipal.API;
 using Unipal.Controller.User;
+using Unipal.Model.User;
 using UnityEngine;
 
 namespace Unipal.Controller.Login {
@@ -131,12 +132,31 @@ namespace Unipal.Controller.Login {
 
             if (unipalMsg.receiveMessageSuccess) {
                 if (unipalMsg.receivedMessage.status.Equals("200")) {
+                    var body = unipalMsg.receivedMessage.body;
 
                     // TODO: create user object here
-                    if (unipalMsg.receivedMessage.body.type == "1") {
+                    if (body.type == "1") {
                         loginStatus.userType = UserType.Student;
+                        Student student = new Student(
+                            body.id,
+                            body.name,
+                            body.surname,
+                            body.email,
+                            body.address,
+                            body.cellphone
+                        );
+                        new StudentController(student);
                     } else {
                         loginStatus.userType = UserType.Teacher;
+                        Student student = new Student(
+                            body.id,
+                            body.name,
+                            body.surname,
+                            body.email,
+                            body.address,
+                            body.cellphone
+                        );
+                        new AdminController(student);
                     }
 
                     loginStatus.status = CredentialStatus.Success;

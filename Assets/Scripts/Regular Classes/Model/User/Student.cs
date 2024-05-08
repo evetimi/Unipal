@@ -9,7 +9,7 @@ namespace Unipal.Model.User {
 
         public List<StudentModule> AttendedModules => _attendedModules;
 
-        public Student(string id, string name) : base(id, name) {
+        public Student(string id, string name, string surname, string email, string address, string phoneNumber) : base(id, name, surname, email, address, phoneNumber) {
             _attendedModules = new();
         }
 

@@ -20,12 +20,21 @@ namespace UI.Logins {
         private bool _tokenVerified;
         private TokenPopup _createdTokenPopup;
 
+        private void Start() {
+            _loginMenuContainer.OnAfterTransition += OnPanelChanged;
+        }
+
         public override void SetEnabled(bool enabled) {
             base.SetEnabled(enabled);
 
             if (enabled) {
                 _loginMenuContainer.ChangeLogin();
             }
+        }
+
+        private void OnPanelChanged(LoginPanelID loginPanelID) {
+            _signInPanel.ResetCreditials();
+            _loginPanel.ResetCreditials();
         }
 
         private async void VerifyEmail() {
@@ -92,12 +101,12 @@ namespace UI.Logins {
                 // TODO: check the user type, go to main menu of that user
 
                 if (login.userType == UserType.Student) {
-                    new StudentController(null);
                     MainMenuController.Instance.MainMenuContainer.ChangeStudentMenu();
                 } else {
-                    new AdminController(null);
                     MainMenuController.Instance.MainMenuContainer.ChangeAdminMenu();
                 }
+
+                _loginPanel.ResetCreditials();
             } else {
                 PopupView.Instance.Open(_confirmPopupPrefab, null, null);
             }
