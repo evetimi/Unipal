@@ -31,7 +31,7 @@ namespace UI.Admins {
                 _id.text = "Student no: " + student.Id;
                 _name.text = student.Name + " " + student.Surname;
                 _gender.text = student.Gender;
-                _dob.text = student.Dob.ToString("dd/mm/yyyy");
+                _dob.text = student.Dob.ToString("dd/MM/yyyy");
                 _address.text = student.Address;
                 _email.text = student.Email;
             }
