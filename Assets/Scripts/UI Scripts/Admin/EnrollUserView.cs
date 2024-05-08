@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -21,9 +22,12 @@ namespace UI.Admins {
         [FoldoutGroup("Setup"), SerializeField] private UIMultipleChoice _gender;
         [FoldoutGroup("Setup"), SerializeField] private TMP_InputField _phoneNumber;
         [FoldoutGroup("Setup"), SerializeField] private UISimpleDateInput _dob;
-        [FoldoutGroup("Setup"), SerializeField] private TMP_Text _emailConfirm;
-        [FoldoutGroup("Setup"), SerializeField] private TMP_Text _token;
         [FoldoutGroup("Setup"), SerializeField] private bool _isSubmitTeacher;
+
+        [FoldoutGroup("Finish"), SerializeField] private TMP_Text _emailConfirm;
+        [FoldoutGroup("Finish"), SerializeField] private TMP_Text _nameConfirm;
+        [FoldoutGroup("Finish"), SerializeField] private TMP_Text _dobConfirm;
+        [FoldoutGroup("Finish"), SerializeField] private TMP_Text _token;
 
         [BoxGroup("Transition"), SerializeField] private TMP_Text _submitText;
         [BoxGroup("Transition"), SerializeField] private Graphic[] _backgroundGraphics;
@@ -50,7 +54,23 @@ namespace UI.Admins {
                 }
                 token = token[..^1];
                 _token.text = token;
+
                 _emailConfirm.text = _email.text;
+                _nameConfirm.text = _name.text + " " + _surname.text;
+
+                try {
+                    DateTime currentDate = DateTime.Today;
+                    DateTime birthDate = new DateTime(int.Parse(_dob.Year), int.Parse(_dob.Month), int.Parse(_dob.Day));
+                    int age = currentDate.Year - birthDate.Year;
+            
+                    // Check if the birthday has occurred this year
+                    if (birthDate > currentDate.AddYears(-age)) {
+                        age--;
+                    }
+
+                    _dobConfirm.text = age + " years old";
+                } catch (Exception) {}
+
                 _enrollMenuContainer.ChangeEnrollSuccess();
             }
         }

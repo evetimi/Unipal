@@ -3748,7 +3748,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Email
+  m_text: Address
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0e8ac2ac4dea72b4390a9382c57b4151, type: 2}
   m_sharedMaterial: {fileID: -1001812478547435511, guid: 0e8ac2ac4dea72b4390a9382c57b4151, type: 2}

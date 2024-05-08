@@ -2501,9 +2501,11 @@ MonoBehaviour:
   _gender: {fileID: 333400158316799797}
   _phoneNumber: {fileID: 3562021300099617269}
   _dob: {fileID: 1575333899149568864}
-  _emailConfirm: {fileID: 7732110742962566695}
-  _token: {fileID: 6267288973823827826}
   _isSubmitTeacher: 0
+  _emailConfirm: {fileID: 7732110742962566695}
+  _nameConfirm: {fileID: 981904132564744218}
+  _dobConfirm: {fileID: 7933057519976899576}
+  _token: {fileID: 6267288973823827826}
   _submitText: {fileID: 2757249724348069448}
   _backgroundGraphics:
   - {fileID: 4075859526745413261}
