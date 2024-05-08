@@ -30,8 +30,8 @@ namespace UI.Admins {
             if (student != null) {
                 _id.text = "Student no: " + student.Id;
                 _name.text = student.Name + " " + student.Surname;
-                _gender.text = "Male";
-                _dob.text = "14/01/2003";
+                _gender.text = student.Gender;
+                _dob.text = student.Dob.ToString("dd/mm/yyyy");
                 _address.text = student.Address;
                 _email.text = student.Email;
             }

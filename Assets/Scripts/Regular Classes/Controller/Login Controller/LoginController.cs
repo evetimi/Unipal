@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -134,6 +135,19 @@ namespace Unipal.Controller.Login {
                 if (unipalMsg.receivedMessage.status.Equals("200")) {
                     var body = unipalMsg.receivedMessage.body;
 
+                    // Extract dob
+                    string dobStr = body.dob;
+                    var dobArr = dobStr.Split('-');
+                    int year = -1, month = -1, day = -1;
+                    int.TryParse(dobArr[0], out year);
+                    int.TryParse(dobArr[1], out month);
+                    int.TryParse(dobArr[2], out day);
+
+                    DateTime dob = new DateTime(2000, 1, 1);
+                    if (year != -1 && month != -1 && day != -1) {
+                        dob = new DateTime(year, month, day);
+                    }
+
                     // TODO: create user object here
                     if (body.type == "1") {
                         loginStatus.userType = UserType.Student;
@@ -142,6 +156,8 @@ namespace Unipal.Controller.Login {
                             body.name,
                             body.surname,
                             body.email,
+                            body.gender,
+                            dob,
                             body.address,
                             body.cellphone
                         );
@@ -153,6 +169,8 @@ namespace Unipal.Controller.Login {
                             body.name,
                             body.surname,
                             body.email,
+                            body.gender,
+                            dob,
                             body.address,
                             body.cellphone
                         );
@@ -234,6 +252,8 @@ namespace Unipal.Controller.Login {
         public string email;
         public string address;
         public string type;
+        public string gender;
+        public string dob;
         public string cellphone;
     }
     #endregion

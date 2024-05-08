@@ -55,7 +55,7 @@ namespace UI.Popup {
             base.Close();
 
             _container.SetActive(false);
-            Destroy(_currentPopupObject);
+            Destroy(_currentPopupObject.gameObject);
         }
 
         public void CancelButtonClick() {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unipal.Model.Modules;
@@ -9,7 +10,7 @@ namespace Unipal.Model.User {
 
         public List<StudentModule> AttendedModules => _attendedModules;
 
-        public Student(string id, string name, string surname, string email, string address, string phoneNumber) : base(id, name, surname, email, address, phoneNumber) {
+        public Student(string id, string name, string surname, string email, string gender, DateTime dob, string address, string phoneNumber) : base(id, name, surname, email, gender, dob, address, phoneNumber) {
             _attendedModules = new();
         }
 

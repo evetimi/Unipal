@@ -2501,7 +2501,7 @@ MonoBehaviour:
   _gender: {fileID: 333400158316799797}
   _phoneNumber: {fileID: 3562021300099617269}
   _dob: {fileID: 1575333899149568864}
-  _emailConfirm: {fileID: 0}
+  _emailConfirm: {fileID: 7732110742962566695}
   _token: {fileID: 6267288973823827826}
   _isSubmitTeacher: 0
   _submitText: {fileID: 2757249724348069448}
@@ -3665,7 +3665,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -50, y: -0.000038146973}
+  m_AnchoredPosition: {x: -50, y: 0}
   m_SizeDelta: {x: 82.0747, y: 82.0747}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5762452257592280493
@@ -8619,7 +8619,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3680845776542071914
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10196,7 +10196,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Mr Mallia
+  m_text: Mr Wayne
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2b643ec300bfce94aaa16d385e39955b, type: 2}
   m_sharedMaterial: {fileID: 8841816326209598218, guid: 2b643ec300bfce94aaa16d385e39955b, type: 2}
