@@ -164,7 +164,7 @@ namespace Unipal.Controller.Login {
                         new StudentController(student);
                     } else {
                         loginStatus.userType = UserType.Teacher;
-                        Student student = new Student(
+                        Teacher teacher = new Teacher(
                             body.id,
                             body.name,
                             body.surname,
@@ -174,7 +174,7 @@ namespace Unipal.Controller.Login {
                             body.address,
                             body.cellphone
                         );
-                        new AdminController(student);
+                        new AdminController(teacher);
                     }
 
                     loginStatus.status = CredentialStatus.Success;

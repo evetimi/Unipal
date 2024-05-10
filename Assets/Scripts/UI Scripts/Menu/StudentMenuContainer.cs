@@ -46,7 +46,7 @@ namespace UI.Menu {
                     break;
                 }
                 case StudentPanelID.Module: {
-                    MoveIndicator(_homeLocation);
+                    MoveIndicator(_bookLocation);
                     break;
                 }
                 case StudentPanelID.Profile: {

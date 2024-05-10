@@ -6,6 +6,9 @@ using Unipal.Model.EventHandlers;
 using UnityEngine;
 
 namespace Unipal.Model.Modules {
+    /// <summary>
+    /// Module to be created for this school. The system will ensure only unique module can be created, and no duplicate module existing.
+    /// </summary>
     public class Module {
         private string _id;
         private string _name;
@@ -37,15 +40,29 @@ namespace Unipal.Model.Modules {
             return base.GetHashCode();
         }
 
+        /// <summary>
+        /// Check if the module has this assignment
+        /// </summary>
+        /// <param name="assignment">The assignment to check</param>
+        /// <returns>TRUE if the assignment exists on this module</returns>
         public bool HasAssignment(Assignment assignment) {
             return _assignments.Contains(assignment);
         }
 
+        /// <summary>
+        /// Add new assignment to this module
+        /// </summary>
+        /// <param name="assignment">The assignment to add</param>
         public void AddAssignment(Assignment assignment) {
             _assignments.Add(assignment);
             AssignmentListUpdate(assignment, UpdateType.Add);
         }
 
+        /// <summary>
+        /// Remove existing assignment from this module
+        /// </summary>
+        /// <param name="assignment">The assignment to remove</param>
+        /// <returns>TRUE if the removing process is successful</returns>
         public bool RemoveAssignment(Assignment assignment) {
             if (_assignments.Remove(assignment)) {
                 AssignmentListUpdate(assignment, UpdateType.Remove);
@@ -54,6 +71,11 @@ namespace Unipal.Model.Modules {
             return false;
         }
 
+        /// <summary>
+        /// Remove the existing assignment by using index
+        /// </summary>
+        /// <param name="index">Assignment index of the module</param>
+        /// <returns>TRUE if the removing process is successful</returns>
         public bool RemoveAssignment(int index) {
             if (index < 0 || index >= _assignments.Count) {
                 return false;
@@ -66,6 +88,11 @@ namespace Unipal.Model.Modules {
             return true;
         }
 
+        /// <summary>
+        /// Call the event of adding/changing/removing the assignment
+        /// </summary>
+        /// <param name="assignment">Assignment that has done the process</param>
+        /// <param name="updateType">Update type, is it add/change/remove?</param>
         private void AssignmentListUpdate(Assignment assignment, UpdateType updateType) {
             OnAssignmentListUpdated?.Invoke(this, new AssignmentListEventArgs(assignment, updateType));
         }
